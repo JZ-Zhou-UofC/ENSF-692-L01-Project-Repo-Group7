@@ -16,22 +16,22 @@ import os
 def convert_to_no(val):
     try:
         if isinstance(val, str):
-            val = val.strip().lower()
-            multiplier = 1
-            if val.endswith('k'):
+            val = val.strip().lower() # removes whitespace, makes any letters lowercase
+            multiplier = 1 # initialize multiplier to 1 
+            if val.endswith('k'): # thousand
                 multiplier = 1_000
                 val = val[:-1]
-            elif val.endswith('m'):
+            elif val.endswith('m'): # million
                 multiplier = 1_000_000
                 val = val[:-1]
-            elif val.endswith('b'):
+            elif val.endswith('b'): # billion
                 multiplier = 1_000_000_000
                 val = val[:-1]
-            return float(val) * multiplier
-        elif isinstance(val, (int, float)):
+            return float(val) * multiplier # return the value multiplied by required multiplier
+        elif isinstance(val, (int, float)): # if it is already numerical, leave it as is
             return val
         else:
-            return np.nan
+            return np.nan # otherwise return not a number
     except Exception:
         return np.nan
 
