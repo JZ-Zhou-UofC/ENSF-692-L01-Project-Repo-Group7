@@ -40,7 +40,6 @@ def convert_to_number(val):
         return np.nan
 
 
-
 def data_processing(excel_file, selected_countries, value_column_name):
     raw_data = pd.read_excel(excel_file)
     data = pd.DataFrame(raw_data)
@@ -50,12 +49,17 @@ def data_processing(excel_file, selected_countries, value_column_name):
     data = data[data["country"].isin(selected_countries)]
 
     # Melt to long format
-    data_melted = data.melt(id_vars=["country"], var_name="year", value_name=value_column_name)
+    data_melted = data.melt(
+        id_vars=["country"], var_name="year", value_name=value_column_name
+    )
     data_melted["year"] = data_melted["year"].astype(int)
-    data_melted[value_column_name] = data_melted[value_column_name].apply(convert_to_number)
+    data_melted[value_column_name] = data_melted[value_column_name].apply(
+        convert_to_number
+    )
     print(data_melted)
 
     return data_melted
+
 
 # combine the three dataframes into one larger df
 def data_combiner(file_column_pairs, country_list):
@@ -125,9 +129,22 @@ def main():
 
     print(df)
 
-    data_2025 = df[df.index.get_level_values('year') == 2025]
+    data_2025 = df[df.index.get_level_values("year") == 2025]
     print(data_2025)
+    china = df.loc["china", "GDP"]
+    print(data_2025)
+    print(china)
+    # print(extract_initial_country(df))
 
-    print(extract_initial_country(df))
+    plt.figure(figsize=(10, 6))
+
+
+    plt.plot(china.index, china.values, marker="o", color="b", label="China GDP")
+    plt.title("China GDP Trend")
+    plt.xlabel("Year")
+    plt.ylabel("GDP in Millions")
+    plt.grid(True)
+    plt.legend()
+    plt.show()
 if __name__ == "__main__":
     main()
