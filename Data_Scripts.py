@@ -40,8 +40,8 @@ raw_data = pd.read_csv("ConsumerPriceIndexData.csv")
 
 # Data file was too large to upload to github so it had to be trimmed
 
-#raw_data_trimmed = raw_data.iloc[600000:]
-#raw_data_trimmed.to_csv("ConsumerPriceIndexData_smaller.csv", index=False)
+raw_data_trimmed = raw_data.iloc[600000:]
+raw_data_trimmed.to_csv("ConsumerPriceIndexData.csv", index=False)
 #print(raw_data_trimmed)
 
 df = pd.DataFrame(raw_data)
