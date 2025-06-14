@@ -44,7 +44,7 @@ pivoted = filtered.pivot(
 )
 pivoted = pivoted.reset_index()
 print(pivoted)
-pivoted.to_csv("cleaned_employment_data.csv", index=False)
+pivoted.to_excel("./data/cleaned_employment_data.xlsx", index=False)
 # filtered = filtered[(filtered["New housing price indexes"] == "Total (house and land)")]
 # filtered = filtered[["REF_DATE", "GEO", "VALUE"]]
 # # Setting the housing index in Jan 2005 to be the reference index

@@ -23,4 +23,4 @@ canada_average_housing_index_jan_2005 = filtered.iloc[0:11]["VALUE"].mean()
 filtered["VALUE"] = filtered["VALUE"] / canada_average_housing_index_jan_2005 * 100
 
 print(filtered)
-filtered.to_excel("./data/cleaned_housing_index_dataa.xlsx", index=False)
+filtered.to_excel("./data/cleaned_housing_index_data.xlsx", index=False)
