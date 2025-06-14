@@ -9,5 +9,4 @@ Provinces = [
     "Quebec",
     "Nova Scotia",
     "Alberta",
-    "Canada",
 ]
