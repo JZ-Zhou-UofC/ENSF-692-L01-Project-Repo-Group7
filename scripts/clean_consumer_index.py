@@ -13,7 +13,7 @@ from provinces import Provinces
 # Consumer Price Index data processing
 
 
-raw_data = pd.read_csv("ConsumerPriceIndexData.csv")
+raw_data = pd.read_csv("./data/ConsumerPriceIndexData.csv")
 
 # # Data file was too large to upload to github so it had to be trimmed
 
@@ -50,4 +50,4 @@ pivoted = filtered.pivot(
 )
 pivoted = pivoted.reset_index()
 print(pivoted)
-pivoted.to_excel("cleaned_consumer_price_index_data.xlsx", index=False)
+pivoted.to_excel("./data/cleaned_consumer_price_index_data.xlsx", index=False)

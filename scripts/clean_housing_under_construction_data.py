@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from provinces import Provinces
 # House Index data processing
 
-raw_data = pd.read_csv("HousingUnderConstructionData.csv")
+raw_data = pd.read_csv("./data/HousingUnderConstructionData.csv")
 df = pd.DataFrame(raw_data)
 
 filtered = df[df["GEO"].isin(Provinces)]
@@ -21,4 +21,4 @@ filtered = filtered[["REF_DATE", "GEO", "VALUE"]]
 
 
 print(filtered)
-filtered.to_excel("cleaned_housing_under_construction_data.xlsx", index=False)
+filtered.to_excel("./data/cleaned_housing_under_construction_data.xlsx", index=False)

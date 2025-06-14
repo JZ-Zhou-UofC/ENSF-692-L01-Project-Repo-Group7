@@ -24,7 +24,7 @@ Provinces = [
 
 # House Index data processing
 
-raw_data = pd.read_csv("HousingIndexData.csv")
+raw_data = pd.read_csv("./data/HousingIndexData.csv")
 df = pd.DataFrame(raw_data)
 
 filtered = df[df["GEO"].isin(Provinces)]
@@ -37,12 +37,12 @@ canada_average_housing_index_jan_2005 = filtered.iloc[0:11]["VALUE"].mean()
 filtered["VALUE"] = filtered["VALUE"] / canada_average_housing_index_jan_2005 * 100
 
 print(filtered)
-filtered.to_excel("cleaned_housing_index_data.xlsx", index=False)
+filtered.to_excel("./data/cleaned_housing_index_data.xlsx", index=False)
 
 # Consumer Price Index data processing
 
 
-raw_data = pd.read_csv("18100004.csv")
+raw_data = pd.read_csv("./data/18100004.csv")
 
 # # Data file was too large to upload to github so it had to be trimmed
 
@@ -79,11 +79,11 @@ raw_data_trimmed.to_csv("ConsumerPriceIndexData.csv", index=False)
 # )
 # pivoted = pivoted.reset_index()
 # print(pivoted)
-# pivoted.to_excel("cleaned_consumer_price_index_data.xlsx", index=False)
+# pivoted.to_excel("./data/cleaned_consumer_price_index_data.xlsx", index=False)
 
 # # Wage & Salary data processing
 
-# raw_data = pd.read_csv("WagesData.csv")
+# raw_data = pd.read_csv("./data/WagesData.csv")
 # df = pd.DataFrame(raw_data)
 
 # filtered = df[df["GEO"].isin(Provinces)]
@@ -98,4 +98,4 @@ raw_data_trimmed.to_csv("ConsumerPriceIndexData.csv", index=False)
 
 # print(filtered)
 
-# filtered.to_excel("cleaned_wage_data.xlsx", index=False)
+# filtered.to_excel("./data/cleaned_wage_data.xlsx", index=False)

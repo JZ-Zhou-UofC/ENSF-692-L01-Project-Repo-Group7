@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from provinces import Provinces
 # House Index data processing
 
-raw_data = pd.read_csv("InterprovincialMigrationData.csv")
+raw_data = pd.read_csv("./data/InterprovincialMigrationData.csv")
 df = pd.DataFrame(raw_data)
 
 filtered = df[df["GEO"].isin(Provinces)]
@@ -28,4 +28,4 @@ pivoted = filtered.pivot(
 )
 pivoted = pivoted.reset_index()
 print(pivoted)
-pivoted.to_excel("cleaned_interprovincial_migration_data.xlsx", index=False)
+pivoted.to_excel("./data/cleaned_interprovincial_migration_data.xlsx", index=False)

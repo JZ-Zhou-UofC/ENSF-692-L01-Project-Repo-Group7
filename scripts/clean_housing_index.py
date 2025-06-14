@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from provinces import Provinces
 # House Index data processing
 
-raw_data = pd.read_csv("HousingIndexData.csv")
+raw_data = pd.read_csv("./data/HousingIndexData.csv")
 df = pd.DataFrame(raw_data)
 
 filtered = df[df["GEO"].isin(Provinces)]
@@ -23,4 +23,4 @@ canada_average_housing_index_jan_2005 = filtered.iloc[0:11]["VALUE"].mean()
 filtered["VALUE"] = filtered["VALUE"] / canada_average_housing_index_jan_2005 * 100
 
 print(filtered)
-filtered.to_excel("cleaned_housing_index_dataa.xlsx", index=False)
+filtered.to_excel("./data/cleaned_housing_index_dataa.xlsx", index=False)

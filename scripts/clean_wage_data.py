@@ -12,7 +12,7 @@ from provinces import Provinces
 
 # Wage & Salary data processing
 
-raw_data = pd.read_csv("WagesData.csv")
+raw_data = pd.read_csv("./data/WagesData.csv")
 df = pd.DataFrame(raw_data)
 
 filtered = df[df["GEO"].isin(Provinces)]
@@ -27,4 +27,4 @@ filtered = filtered[["REF_DATE", "GEO", "VALUE"]]
 
 print(filtered)
 
-filtered.to_excel("cleaned_wage_data.xlsx", index=False)
+filtered.to_excel("./data/cleaned_wage_data.xlsx", index=False)

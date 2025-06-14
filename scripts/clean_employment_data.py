@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from provinces import Provinces
 # House Index data processing
 
-raw_data = pd.read_csv("EmploymentData.csv")
+raw_data = pd.read_csv("./data/EmploymentData.csv")
 
 
 df = pd.DataFrame(raw_data)
@@ -52,4 +52,4 @@ pivoted.to_csv("cleaned_employment_data.csv", index=False)
 # filtered["VALUE"] = filtered["VALUE"] / canada_average_housing_index_jan_2005 * 100
 
 # print(filtered)
-# filtered.to_excel("cleaned_housing_index_data.xlsx", index=False)
+# filtered.to_excel("./data/cleaned_housing_index_data.xlsx", index=False)
