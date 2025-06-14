@@ -43,6 +43,7 @@ pivoted = filtered.pivot(
     index=["REF_DATE", "GEO"], columns="Labour force characteristics", values="VALUE"
 )
 pivoted = pivoted.reset_index()
+
 print(pivoted)
 pivoted.to_excel("./data/cleaned_employment_data.xlsx", index=False)
 # filtered = filtered[(filtered["New housing price indexes"] == "Total (house and land)")]

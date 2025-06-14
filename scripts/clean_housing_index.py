@@ -21,6 +21,6 @@ filtered = filtered[["REF_DATE", "GEO", "VALUE"]]
 # Setting the housing index in Jan 2005 to be the reference index
 canada_average_housing_index_jan_2005 = filtered.iloc[0:11]["VALUE"].mean()
 filtered["VALUE"] = filtered["VALUE"] / canada_average_housing_index_jan_2005 * 100
-
+filtered = filtered.rename(columns={"VALUE": "Housing Index"})
 print(filtered)
 filtered.to_excel("./data/cleaned_housing_index_data.xlsx", index=False)
