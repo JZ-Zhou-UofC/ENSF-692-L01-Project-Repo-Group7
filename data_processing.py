@@ -28,5 +28,5 @@ def creating_dataframe():
             merged_df = df
         else:
             merged_df = pd.merge(merged_df, df, on=["REF_DATE", "GEO"], how="outer", suffixes=('', '_dup'))
-        merged_df.to_excel("./data/merged_data_frame.xlsx", index=False)
-        return merged_df
+    merged_df.to_excel("./data/merged_data_frame.xlsx", index=False)
+    return merged_df
