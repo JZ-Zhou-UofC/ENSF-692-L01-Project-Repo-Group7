@@ -1,5 +1,4 @@
-from data_processing import create_dataframe, create_multi_indexing
-
+from data_processing import *
 
 def run_cli():
     print("Welcome to the Data Analysis Project")
@@ -9,5 +8,7 @@ def run_cli():
     df=create_dataframe()
     print(df.head())
     df=create_multi_indexing(df)
-    print("_____________________________CLI     MUltindxing____________")
+   
+    df=adding_average_monthly_wage_column(df)
+    print("_____________________________add column____________")
     print(df)

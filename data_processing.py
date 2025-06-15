@@ -50,5 +50,15 @@ def create_multi_indexing(df):
     df.columns = pd.MultiIndex.from_tuples(column_tuples)
     print("_____________________________MUltindxing____________")
     print(df)
+   
     # df.to_excel("./data/multindexing.xlsx")
+    # generate the excel only once to check the data
     return df
+
+
+def adding_average_monthly_wage_column(df):
+   df[('Wage', 'Average Monthly Wage')] = (
+    df[('Wage', 'Total Wage (thousands dollars)')]
+    / df[('Employment', 'Employment (thousands)')] 
+)
+   return df
