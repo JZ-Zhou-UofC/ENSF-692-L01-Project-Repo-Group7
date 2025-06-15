@@ -12,3 +12,7 @@ def run_cli():
     df=adding_average_monthly_wage_column(df)
     print("_____________________________add column____________")
     print(df)
+    
+    input_province_array=["Alberta","British Columbia"]
+    covid_period=True
+    create_graph_to_compare_migration_trends_for_two_province(input_province_array,df,covid_period)

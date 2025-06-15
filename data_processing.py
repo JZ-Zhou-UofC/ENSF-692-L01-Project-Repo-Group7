@@ -1,5 +1,5 @@
 import pandas as pd
-
+from plotting import *
 excel_files = [
     './data/cleaned_consumer_price_index_data.xlsx',
     './data/cleaned_employment_data.xlsx',
@@ -62,3 +62,13 @@ def adding_average_monthly_wage_column(df):
     / df[('Employment', 'Employment (thousands)')] 
 )
    return df
+
+def create_graph_to_compare_migration_trends_for_two_province(input_province_array,df,covid_period):
+    filtered = df[df.index.get_level_values('GEO').isin(input_province_array)]
+    filtered = filtered[('Migration', 'Out-migrants')]
+    if covid_period:
+        filtered = filtered[filtered.index.get_level_values('REF_DATE') >= '2020-01']
+   
+    
+    print(filtered)
+    plot_migration_trend(filtered, title="Out-Migration Trends")
