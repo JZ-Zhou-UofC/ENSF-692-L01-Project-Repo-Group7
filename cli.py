@@ -1,4 +1,4 @@
-from data_processing import creating_dataframe
+from data_processing import create_dataframe, create_multi_indexing
 
 
 def run_cli():
@@ -6,5 +6,8 @@ def run_cli():
 
 
 
-    df=creating_dataframe()
+    df=create_dataframe()
     print(df.head())
+    df=create_multi_indexing(df)
+    print("_____________________________CLI     MUltindxing____________")
+    print(df)
