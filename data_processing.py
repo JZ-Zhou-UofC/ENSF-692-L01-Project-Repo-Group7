@@ -1,5 +1,7 @@
 import pandas as pd
-from plotting import *
+from plotting import plot_migration_trend
+from scripts.provinces import province_map
+
 excel_files = [
     './data/cleaned_consumer_price_index_data.xlsx',
     './data/cleaned_employment_data.xlsx',
@@ -48,7 +50,7 @@ def create_multi_indexing(df):
     ('Wage', 'Total Wage (thousands dollars)')
 ]
     df.columns = pd.MultiIndex.from_tuples(column_tuples)
-    print("_____________________________MUltindxing____________")
+    print("_____________________________Multindexing____________")
     print(df)
    
     # df.to_excel("./data/multindexing.xlsx")
@@ -63,12 +65,43 @@ def adding_average_monthly_wage_column(df):
 )
    return df
 
-def create_graph_to_compare_migration_trends_for_two_province(input_province_array,df,covid_period):
-    filtered = df[df.index.get_level_values('GEO').isin(input_province_array)]
-    filtered = filtered[('Migration', 'Out-migrants')]
+def create_graph_to_compare_migration_trends_for_two_province(df,covid_period):
+
+    thetwoprovinces = provinput()
+    maincolumn, subcolumn = crossreferenceinput(df)
+
+    filtered = df[df.index.get_level_values('GEO').isin(thetwoprovinces)]
+    filtered = filtered[[('Migration', 'Out-migrants'), (maincolumn, subcolumn)]]
     if covid_period:
         filtered = filtered[filtered.index.get_level_values('REF_DATE') >= '2020-01']
    
     
     print(filtered)
-    plot_migration_trend(filtered, title="Out-Migration Trends")
+    plot_migration_trend(filtered, maincolumn, subcolumn, title="Out-Migration Trends")
+
+
+def provinput():
+
+    userinput = input("Please enter two Canadian provinces separated by a comma, in short form e.g., AB, QC: ")
+    twoprovinces = [prov.strip().upper() for prov in userinput.split(",") ]
+    twoprovincesfull = []
+
+    for keys in twoprovinces:
+        twoprovincesfull.append(province_map.get(keys))
+
+    
+    return(twoprovincesfull)
+
+def crossreferenceinput(df):
+
+    maincolumn = input("Input the chosen dataset for cross-reference, e.g., CPI, Employment, Housing, Wage, etc: ")
+    
+    if maincolumn in df.columns.levels[0]:
+        subcolumns = df[maincolumn].columns.tolist()
+        print("Available subcategories:", subcolumns)
+        subcolumninput = input("Input the chosen subcolumn from the list above: ")
+    
+    else:
+        print(f"{maincolumn} not found in DataFrame columns.")
+    
+    return maincolumn, subcolumninput
