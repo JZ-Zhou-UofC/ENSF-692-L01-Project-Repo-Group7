@@ -7,7 +7,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from provinces import Provinces
+from provinces import PROVINCE
 
 # House Index data processing
 
@@ -15,10 +15,14 @@ from provinces import Provinces
 raw_data = pd.read_csv("./data/InterprovincialMigrationData.csv")
 df = pd.DataFrame(raw_data)
 
+# Preparing the data for month filing
+df["VALUE"] = (df["VALUE"] / 3).round()
+
 # Filter by province and date
-filtered = df[df["GEO"].isin(Provinces)]
+filtered = df[df["GEO"].isin(PROVINCE)]
 filtered = filtered[(filtered["REF_DATE"] <= "2025-01")]
 filtered = filtered[(filtered["REF_DATE"] >= "2005-01")]
+filtered
 
 # Pivot to get In-migrants and Out-migrants in columns
 pivoted = filtered.pivot(
