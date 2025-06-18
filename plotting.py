@@ -14,7 +14,7 @@ def plot_migration_trend(filtered_df, title="Out-Migration Trends"):
     filtered_df = filtered_df.reset_index()
     
     # Pivot table: rows = REF_DATE, columns = GEO
-    pivot = filtered_df.pivot(index='REF_DATE', columns='GEO', values=('Migration', 'Out-migrants'))
+    pivot = filtered_df.pivot(index='REF_DATE', columns='GEO', values=('Migration', 'Net-migrants'))
     
     # Sort index just in case (ensures chronological order)
     pivot = pivot.sort_index()
@@ -23,7 +23,7 @@ def plot_migration_trend(filtered_df, title="Out-Migration Trends"):
     pivot.plot(figsize=(10, 6))
     plt.title(title)
     plt.xlabel('Date')
-    plt.ylabel('Out-Migrants')
+    plt.ylabel('Net-Migrants')
     plt.legend(title='Province')
     plt.grid(True)
     plt.tight_layout()

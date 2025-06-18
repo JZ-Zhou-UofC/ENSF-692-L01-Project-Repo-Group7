@@ -64,8 +64,13 @@ def adding_average_monthly_wage_column(df):
    return df
 
 def create_graph_to_compare_migration_trends_for_two_province(input_province_array,df,covid_period):
+ 
+
     filtered = df[df.index.get_level_values('GEO').isin(input_province_array)]
-    filtered = filtered[('Migration', 'Out-migrants')]
+   
+    filtered = filtered[[('Migration', 'Out-migrants'),('Migration', 'In-migrants')]]
+    filtered['Migration','Net-migrants']=filtered[('Migration', 'In-migrants')]-filtered[('Migration', 'Out-migrants')]
+    print(filtered)
     if covid_period:
         filtered = filtered[filtered.index.get_level_values('REF_DATE') >= '2020-01']
    
