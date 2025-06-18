@@ -4,6 +4,10 @@ from provinces import *
 
 def run_cli(df):
     """
+    *
+    *
+    *
+    *
     Introduction
     """
     print("Welcome to the Data Analysis Project")
@@ -29,6 +33,10 @@ def run_cli(df):
     print("\n\n")
 
     """
+    *
+    *
+    *
+    *
     Proving
     """
     print(
@@ -62,14 +70,16 @@ def run_cli(df):
 
     print("\n\n")
     input("Enter any key to continue > ")
+
     """
+    *
+    *
+    *
+    *
     Main interaction looping
     """
-
     while True:
-        print(
-            "let's explore some interesting comparisons based on other criteria."
-        )
+        print("let's explore some interesting comparisons based on other criteria.")
         print("You can select up to three provinces to compare a specific criterion.")
         print(
             'You can jump to see conclusion at any time by entering "exit" in the cmd.'
@@ -87,12 +97,10 @@ def run_cli(df):
         sub_column = get_sub_column(df, main_column)
         if sub_column == "exit":
             break
-        #TODO give the ability to select time range
-        create_graph_to_compare(df, province,main_column,sub_column)
+        # TODO give the ability to select time range
+        create_graph_to_compare(df, province, main_column, sub_column)
         print("\n\n")
-        print(
-            'Anything else you want to see?'
-        )
+        print("Anything else you want to see?")
         ##TODO We can probably do some aggregation here
     ##TODO Here is something interesting we found
     print(
