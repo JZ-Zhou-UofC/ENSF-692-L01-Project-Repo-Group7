@@ -1,6 +1,6 @@
 import pandas as pd
 from plotting import *
-from scripts.provinces import *
+from provinces import *
 
 excel_files = [
     "./data/cleaned_consumer_price_index_data.xlsx",

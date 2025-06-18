@@ -1,5 +1,5 @@
 from data_processing import *
-from scripts.provinces import *
+from provinces import *
 
 
 def run_cli(df):
