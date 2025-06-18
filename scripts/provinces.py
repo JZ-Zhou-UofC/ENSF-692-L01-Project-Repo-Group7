@@ -1,4 +1,4 @@
-Provinces = [
+PROVINCE = [
     "British Columbia",
     "Ontario",
     "Prince Edward Island",
@@ -11,7 +11,7 @@ Provinces = [
     "Alberta",
 ]
 
-province_map = {
+PROVINCE_MAP = {
     "AB": "Alberta",
     "BC": "British Columbia",
     "MB": "Manitoba",

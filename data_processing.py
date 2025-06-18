@@ -1,6 +1,6 @@
 import pandas as pd
-from plotting import plot_migration_trend
-from scripts.provinces import province_map
+from plotting import *
+from scripts.provinces import PROVINCE_MAP,PROVINCE
 
 excel_files = [
     './data/cleaned_consumer_price_index_data.xlsx',
@@ -65,6 +65,11 @@ def adding_average_monthly_wage_column(df):
 )
    return df
 
+def adding_net_migration_column(df):
+    df = df[[('Migration', 'Out-migrants'),('Migration', 'In-migrants')]]
+    df['Migration','Net-migrants']=df[('Migration', 'In-migrants')]-df[('Migration', 'Out-migrants')]
+    return df
+
 def create_graph_to_compare_migration_trends_for_two_province(df,covid_period):
 
     thetwoprovinces = provinput()
@@ -77,7 +82,7 @@ def create_graph_to_compare_migration_trends_for_two_province(df,covid_period):
    
     
     print(filtered)
-    plot_migration_trend(filtered, maincolumn, subcolumn, title="Out-Migration Trends")
+    plot_two_trend_comparison(filtered, maincolumn, subcolumn, title="Out-Migration Trends")
 
 
 def provinput():
@@ -87,7 +92,7 @@ def provinput():
     twoprovincesfull = []
 
     for keys in twoprovinces:
-        twoprovincesfull.append(province_map.get(keys))
+        twoprovincesfull.append(PROVINCE_MAP.get(keys))
 
     
     return(twoprovincesfull)
@@ -105,3 +110,12 @@ def crossreferenceinput(df):
         print(f"{maincolumn} not found in DataFrame columns.")
     
     return maincolumn, subcolumninput
+def proving_migration_trend(df):
+
+    province_of_interest=["British Columbia","Ontario","Saskatchewan","Alberta",]
+    filtered = df[df.index.get_level_values('GEO').isin(province_of_interest)]
+    filtered = filtered[[('Migration', 'Net-migrants')]]
+    
+   
+    
+    plot_net_migration(filtered,province_of_interest)
