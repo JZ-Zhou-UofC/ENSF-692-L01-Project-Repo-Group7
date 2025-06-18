@@ -1,6 +1,6 @@
 import pandas as pd
 from plotting import *
-from scripts.provinces import PROVINCE_MAP, PROVINCE,PROVINCE_OF_INTEREST
+from scripts.provinces import *
 
 excel_files = [
     "./data/cleaned_consumer_price_index_data.xlsx",
@@ -78,51 +78,15 @@ def adding_net_migration_column(df):
     return df
 
 
-def create_graph_to_compare_migration_trends_for_two_province(df, covid_period):
-
-    thetwoprovinces = provinput()
-    maincolumn, subcolumn = crossreferenceinput(df)
-
-    filtered = df[df.index.get_level_values("GEO").isin(thetwoprovinces)]
-    filtered = filtered[[("Migration", "Out-migrants"), (maincolumn, subcolumn)]]
-    if covid_period:
-        filtered = filtered[filtered.index.get_level_values("REF_DATE") >= "2020-01"]
-
-    print(filtered)
+def create_graph_to_compare(df, province,main_column,sub_column):
+    #TODO figure out the graph name etc.
+    filtered = df[df.index.get_level_values("GEO").isin(province)]
+    filtered = filtered[[(main_column, sub_column)]]
+ 
     plot_two_trend_comparison(
-        filtered, maincolumn, subcolumn, title="Out-Migration Trends"
+        filtered, main_column, sub_column, title="Out-Migration Trends"
     )
 
-
-def provinput():
-
-    userinput = input(
-        "Please enter two Canadian provinces separated by a comma, in short form e.g., AB, QC: "
-    )
-    twoprovinces = [prov.strip().upper() for prov in userinput.split(",")]
-    twoprovincesfull = []
-
-    for keys in twoprovinces:
-        twoprovincesfull.append(PROVINCE_MAP.get(keys))
-
-    return twoprovincesfull
-
-
-def crossreferenceinput(df):
-
-    maincolumn = input(
-        "Input the chosen dataset for cross-reference, e.g., CPI, Employment, Housing, Wage, etc: "
-    )
-
-    if maincolumn in df.columns.levels[0]:
-        subcolumns = df[maincolumn].columns.tolist()
-        print("Available subcategories:", subcolumns)
-        subcolumninput = input("Input the chosen subcolumn from the list above: ")
-
-    else:
-        print(f"{maincolumn} not found in DataFrame columns.")
-
-    return maincolumn, subcolumninput
 
 
 def proving_migration_trend(df):
@@ -135,7 +99,7 @@ def proving_migration_trend(df):
     plot_to_prove_trends_in_province_of_interest(filtered, PROVINCE_OF_INTEREST,title,main_column,sub_column)
 
 def proving_housing_price_trend(df):
-    title="Housing Index Trends"
+    title="Housing Index Trends (2005 national average index=100)"
     main_column="Housing"
     sub_column="Housing Index"
     filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]

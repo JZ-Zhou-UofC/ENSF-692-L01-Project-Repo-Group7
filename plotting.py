@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_two_trend_comparison(
-    filtered_df, main_column, sub_column, title="Out-Migration Trends"
+    filtered_df, main_column, sub_column, title="plot_two_trend_comparison"
 ):
     """
     Plots a comparison between Out-Migration trends and another cross-referenced
@@ -25,7 +25,7 @@ def plot_two_trend_comparison(
 
     # Pivot migration data
     migration_pivot = filtered_df.pivot(
-        index="REF_DATE", columns="GEO", values=(main_column, "Out-migrants")
+        index="REF_DATE", columns="GEO", values=(main_column, sub_column)
     )
     migration_pivot = migration_pivot.sort_index()
 
@@ -34,14 +34,15 @@ def plot_two_trend_comparison(
         index="REF_DATE", columns="GEO", values=crossref_data
     )
     other_pivot = other_pivot.sort_index()
-
+    
+    plt.ion()   # this is needed to make the plot not to block cli process
     # Create subplots
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 10), sharex=True)
 
-    # Plot Out-Migration trend
+    
     migration_pivot.plot(ax=axes[0])
     axes[0].set_title(title)
-    axes[0].set_ylabel("Out-Migrants")
+    axes[0].set_ylabel(sub_column)
     axes[0].legend(title="Province")
     axes[0].grid(True)
 
@@ -86,8 +87,9 @@ def plot_to_prove_trends_in_province_of_interest(filtered_df, province_of_intere
     pivot_before = before_covid.pivot(index="REF_DATE", columns="GEO", values=(main_column, sub_column)).sort_index()
     pivot_after = after_covid.pivot(index="REF_DATE", columns="GEO", values=(main_column, sub_column)).sort_index()
 
+ 
+    plt.ion()   # this is needed to make the plot not to block cli process
     # Create subplots
-    plt.ion()
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 10))
     fig.suptitle(title, fontsize=16)
 
