@@ -83,7 +83,7 @@ def create_graph_to_compare(df, province,main_column,sub_column):
     filtered = df[df.index.get_level_values("GEO").isin(province)]
     filtered = filtered[[(main_column, sub_column)]]
  
-    plot_two_trend_comparison(
+    plot_provinces_comparison(
         filtered, main_column, sub_column, title="Out-Migration Trends"
     )
 

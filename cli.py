@@ -38,6 +38,7 @@ def run_cli(df):
     input("Enter any key to continue > ")
 
     proving_migration_trend(df)
+    ##TODO We can probably do some aggregation here. Do aggregation of sum of people moved into places before covid after covid
     print(
         "From the graph, it's evident that around 2022, there was a noticeable outflow of people from British Columbia and Ontario, while Alberta saw an increase in in-migration."
     )
@@ -67,7 +68,7 @@ def run_cli(df):
 
     while True:
         print(
-            "Next, let's explore some interesting comparisons based on other criteria."
+            "let's explore some interesting comparisons based on other criteria."
         )
         print("You can select up to three provinces to compare a specific criterion.")
         print(
@@ -88,7 +89,11 @@ def run_cli(df):
             break
         #TODO give the ability to select time range
         create_graph_to_compare(df, province,main_column,sub_column)
-
+        print("\n\n")
+        print(
+            'Anything else you want to see?'
+        )
+        ##TODO We can probably do some aggregation here
     ##TODO Here is something interesting we found
     print(
         "Thank you for using this User interactive cli. Hope you found something interesting"

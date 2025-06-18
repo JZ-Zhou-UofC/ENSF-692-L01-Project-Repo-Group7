@@ -1,9 +1,11 @@
 import matplotlib.pyplot as plt
 
 
-def plot_two_trend_comparison(
-    filtered_df, main_column, sub_column, title="plot_two_trend_comparison"
+def plot_provinces_comparison(
+    filtered_df, main_column, sub_column, title="plot_provinces_comparison"
 ):
+    
+    # TODO we will need to figure out how to get the correct unit for each graph
     """
     Plots a comparison between Out-Migration trends and another cross-referenced
     data trend over time, based on the selected columns.
@@ -34,7 +36,7 @@ def plot_two_trend_comparison(
         index="REF_DATE", columns="GEO", values=crossref_data
     )
     other_pivot = other_pivot.sort_index()
-    
+
     plt.ion()   # this is needed to make the plot not to block cli process
     # Create subplots
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 10), sharex=True)
