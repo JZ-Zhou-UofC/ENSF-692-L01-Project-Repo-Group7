@@ -106,5 +106,31 @@ def proving_housing_price_trend(df):
     filtered = filtered[[(main_column, sub_column)]]
     plot_to_prove_trends_in_province_of_interest(filtered, PROVINCE_OF_INTEREST,title,main_column,sub_column)
 
+def housing_outmigration_correlation_coefficient_post_covid(df):
+
+    title="Correlation coefficients for AB, ON, BC, SK"
+    main_column="Housing"
+    sub_column="Housing Index"
+    filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
+    filtered = filtered[filtered.index.get_level_values("REF_DATE") >= "2020-01"]
+    filtered = filtered[[(main_column, sub_column), ('Migration', 'Out-migrants')]]
+
+    correlation_results = {}
+    for province in PROVINCE_OF_INTEREST:
+
+        province_data = filtered[filtered.index.get_level_values("GEO") == province]
+        province_data = province_data.dropna() #drop empty values
+
+        x = province_data[(main_column, sub_column)]
+        y = province_data[('Migration', 'Out-migrants')]
+        corr = x.corr(y)
+
+        correlation_results[province] = corr
+    print(correlation_results)
+
+    plot_housing_correlation_coefficients(correlation_results, PROVINCE_OF_INTEREST)
+        
+
+
 if __name__ == "__main__":
     pass

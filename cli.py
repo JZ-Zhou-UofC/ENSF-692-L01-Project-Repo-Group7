@@ -9,7 +9,7 @@ def run_cli(df):
     print("Welcome to the Data Analysis Project")
     print("This topic is inspired by the following article:")
     print(
-        "Seeking affordability, young families flee Canada's big cities for cheaper options"
+        "'Seeking affordability, young families flee Canada's big cities for cheaper options' written by John Macfarlane"
     )
     print(
         "https://ca.finance.yahoo.com/news/seeking-affordability-young-families-flee-canadas-big-cities-for-cheaper-options-192548346.html"
@@ -22,9 +22,9 @@ def run_cli(df):
     )
     # TODO We need to think about this as we work on this
     print(
-        "Then we will explore/compare different data trend to find out what factors cause people to move"
+        "Then we will explore/compare different data trends to find out what factors cause people to move"
     )
-    print("Lastly, we will present some interesting conclusion we found along the way ")
+    print("Lastly, we will present some interesting conclusions we found along the way ")
 
     print("\n\n")
 
@@ -32,7 +32,10 @@ def run_cli(df):
     Proving
     """
     print(
-        "Let's get started by proving wether people are moving away from province with high housing prices to province with low housing prices"
+        "Let's get started by proving whether people are moving away from provinces with high housing prices to province with low housing prices"
+    )
+    print(
+        "Specifically, demonstrate if people are leaving British Columbia and Ontario, the two provinces with the largest & most expensive metropolitan areas in the country"
     )
     ## John: I'm using this as a pause to the program. This is for the user to read the content above
     input("Enter any key to continue > ")
@@ -58,8 +61,14 @@ def run_cli(df):
     print("\n\n")
     input("Enter any key to continue > ")
     ##TODO say something....
-    print("TODO is article telling the truth?.......")
-
+    print(
+        "To demonstrate this, the correlation coefficient between out-migration and housing index will be calculated for each relevant province post-covid."
+    )
+    print(
+        "Alberta and Saskatchewan, with their more affordable housing, will be compared to Ontario and British Columbia."
+    )
+    housing_outmigration_correlation_coefficient_post_covid(df)
+    
     print("\n\n")
     input("Enter any key to continue > ")
     """

@@ -1,6 +1,23 @@
 import matplotlib.pyplot as plt
 
 
+def plot_housing_correlation_coefficients(correlation_results, provinces):
+
+    values = [correlation_results[prov] for prov in provinces]
+
+    plt.figure(figsize=(8, 5))
+    plt.bar(provinces, values, color='skyblue')
+
+    plt.title('Correlation Coefficients: Housing vs Out-migration (Post-COVID)')
+    plt.ylabel('Correlation Coefficient')
+    plt.xlabel('Province')
+    plt.ylim(-1, 1)  # Optional: set y-axis limits for clarity
+
+    plt.axhline(0, color='gray', linewidth=0.8)
+
+    plt.tight_layout()
+    plt.show()   
+
 def plot_provinces_comparison(
     filtered_df, main_column, sub_column, title="plot_provinces_comparison"
 ):
