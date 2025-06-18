@@ -34,9 +34,12 @@ def run_cli(df):
 
    
     proving_migration_trend(df)
-    print("First we will show you if people are moving out of ")
+    print("From the graph, it's evident that around 2022, there was a noticeable outflow of people from British Columbia and Ontario, while Alberta saw an increase in in-migration.")
+    print("Migration trends in more affordable provinces like Saskatchewan appear relatively stable during this period.")
+    print("\n\n")
+   
     input("Enter any key to continue > ")
-
+    proving_housing_price_trend(df)
    
     # example on how to generate a graph
     # these 2 things will be acquired from the user input. this gives the user option to show different graphs

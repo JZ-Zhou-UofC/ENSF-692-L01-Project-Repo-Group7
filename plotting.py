@@ -71,9 +71,9 @@ def plot_net_migration(filtered_df, province_of_interest, title="Net-Migration T
         DataFrame with MultiIndex including 'REF_DATE' and 'GEO',
         and a ('Migration', 'Net-migrants') column.
     - expensiv_province: list of str
-        Provinces considered expensive (not directly used here, but could be for filtering).
+        PROVINCE considered expensive (not directly used here, but could be for filtering).
     - inexpensive_province: list of str
-        Provinces considered inexpensive (not directly used here, but could be for filtering).
+        PROVINCE considered inexpensive (not directly used here, but could be for filtering).
     - title: str
         Overall title of the plot.
     """

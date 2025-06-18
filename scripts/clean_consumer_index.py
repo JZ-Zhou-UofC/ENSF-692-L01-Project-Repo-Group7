@@ -7,7 +7,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from provinces import Provinces
+from provinces import PROVINCE
 
 # House Index data processing
 
@@ -36,7 +36,7 @@ consumer_price_index_columns = [
     "Alcoholic beverages, tobacco products and recreational cannabis",
     "Energy",
 ]
-filtered = df[df["GEO"].isin(Provinces)]
+filtered = df[df["GEO"].isin(PROVINCE)]
 filtered = filtered[(filtered["REF_DATE"] <= "2025-01")]
 filtered = filtered[(filtered["REF_DATE"] >= "2005-01")]
 filtered = filtered[(filtered["UOM"] == "2002=100")]

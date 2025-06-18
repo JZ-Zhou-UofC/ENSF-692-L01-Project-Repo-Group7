@@ -7,7 +7,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from provinces import Provinces
+from provinces import PROVINCE
 # House Index data processing
 
 raw_data = pd.read_csv("./data/EmploymentData.csv")
@@ -15,7 +15,7 @@ raw_data = pd.read_csv("./data/EmploymentData.csv")
 
 df = pd.DataFrame(raw_data)
 
-filtered = df[df["GEO"].isin(Provinces)]
+filtered = df[df["GEO"].isin(PROVINCE)]
 filtered = filtered[(filtered["REF_DATE"] <= "2025-01")]
 filtered = filtered[(filtered["REF_DATE"] >= "2005-01")]
 filtered = filtered[(filtered["Data type"] == "Seasonally adjusted")]
