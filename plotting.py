@@ -25,7 +25,7 @@ def plot_two_trend_comparison(
 
     # Pivot migration data
     migration_pivot = filtered_df.pivot(
-        index="REF_DATE", columns="GEO", values=("Migration", "Out-migrants")
+        index="REF_DATE", columns="GEO", values=(main_column, "Out-migrants")
     )
     migration_pivot = migration_pivot.sort_index()
 
@@ -58,68 +58,74 @@ def plot_two_trend_comparison(
     plt.show()
 
 
-import matplotlib.pyplot as plt
 
 
-def plot_net_migration(filtered_df, province_of_interest, title="Net-Migration Trends"):
+
+
+
+
+
+def plot_to_prove_trends_in_province_of_interest(filtered_df, province_of_interest, title,main_column,sub_column):
     """
-    Plots net migration trends for provinces, split into two time periods:
-    before and after January 2020 (COVID onset).
-
-    Parameters:
-    - filtered_df: pd.DataFrame
-        DataFrame with MultiIndex including 'REF_DATE' and 'GEO',
-        and a ('Migration', 'Net-migrants') column.
-    - expensiv_province: list of str
-        PROVINCE considered expensive (not directly used here, but could be for filtering).
-    - inexpensive_province: list of str
-        PROVINCE considered inexpensive (not directly used here, but could be for filtering).
-    - title: str
-        Overall title of the plot.
+    Plots net migration trends in a 2x2 subplot layout:
+    1. All provinces before COVID
+    2. All provinces after COVID
+    3. Alberta & Saskatchewan after COVID
+    4. Ontario & British Columbia after COVID
     """
-    # Split data into before and after COVID
-    before_covid = filtered_df[
-        filtered_df.index.get_level_values("REF_DATE") < "2020-01"
-    ]
-    after_covid = filtered_df[
-        filtered_df.index.get_level_values("REF_DATE") >= "2020-01"
-    ]
+
+    # Split data
+    before_covid = filtered_df[filtered_df.index.get_level_values("REF_DATE") < "2020-01"]
+    after_covid = filtered_df[filtered_df.index.get_level_values("REF_DATE") >= "2020-01"]
 
     # Reset index
     before_covid = before_covid.reset_index()
     after_covid = after_covid.reset_index()
 
-    # Pivot both sets
-    pivot_before = before_covid.pivot(
-        index="REF_DATE", columns="GEO", values=("Migration", "Net-migrants")
-    ).sort_index()
+    # Pivot data
+    pivot_before = before_covid.pivot(index="REF_DATE", columns="GEO", values=(main_column, sub_column)).sort_index()
+    pivot_after = after_covid.pivot(index="REF_DATE", columns="GEO", values=(main_column, sub_column)).sort_index()
 
-    pivot_after = after_covid.pivot(
-        index="REF_DATE", columns="GEO", values=("Migration", "Net-migrants")
-    ).sort_index()
-
-
-    # Plotting
+    # Create subplots
     plt.ion()
-    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 10), sharex=False)
+    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 10))
+    fig.suptitle(title, fontsize=16)
 
-    # Plot before COVID
-    pivot_before[province_of_interest].plot(ax=axes[0])
-    axes[0].set_title(f"{title} (Before COVID)")
-    axes[0].set_xlabel("Date")
-    axes[0].set_ylabel("Net-Migrants")
-    axes[0].legend(title="Province")
-    axes[0].grid(True)
+    # --- Plot 1: Before COVID - All provinces ---
+    pivot_before[province_of_interest].plot(ax=axes[0, 0])
+    axes[0, 0].set_title("Before COVID")
+    axes[0, 0].set_ylabel(sub_column)
+    axes[0, 0].set_xlabel("Date")
+    axes[0, 0].legend(title="Province")
+    axes[0, 0].grid(True)
 
+    # --- Plot 2: After COVID - All provinces ---
+    pivot_after[province_of_interest].plot(ax=axes[0, 1])
+    axes[0, 1].set_title("After COVID")
+    axes[0, 1].set_ylabel(sub_column)
+    axes[0, 1].set_xlabel("Date")
+    axes[0, 1].legend(title="Province")
+    axes[0, 1].grid(True)
 
-    # Plot after COVID
-    pivot_after[province_of_interest].plot(ax=axes[1])
-    axes[1].set_title(f"{title} (After COVID)")
-    axes[1].set_xlabel("Date")
-    axes[1].set_ylabel("Net-Migrants")
-    axes[1].legend(title="Province")
-    axes[1].grid(True)
+    # --- Plot 3: After COVID - Alberta & Saskatchewan ---
+    pivot_after[["Alberta", "Saskatchewan"]].plot(ax=axes[1, 0], color=["green", "lightgreen"])
+    axes[1, 0].set_title("AB & SK (After COVID)")
+    axes[1, 0].set_ylabel(sub_column)
+    axes[1, 0].set_xlabel("Date")
+    axes[1, 0].legend(title="Province")
+    axes[1, 0].grid(True)
 
+    # --- Plot 4: After COVID - Ontario & BC ---
+    pivot_after[["Ontario", "British Columbia"]].plot(ax=axes[1, 1], color=["orange", "red"])
+    axes[1, 1].set_title("ON & BC (After COVID)")
+    axes[1, 1].set_ylabel(sub_column)
+    axes[1, 1].set_xlabel("Date")
+    axes[1, 1].legend(title="Province")
+    axes[1, 1].grid(True)
 
-    plt.tight_layout()
+    # Layout adjustment
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.show()
+
+if __name__ == "__main__":
+    pass

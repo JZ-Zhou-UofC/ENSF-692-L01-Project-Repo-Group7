@@ -23,4 +23,9 @@ PROVINCE_MAP = {
     "QC": "Quebec",
     "SK": "Saskatchewan"
 }
-
+PROVINCE_OF_INTEREST = [
+        "British Columbia",
+        "Ontario",
+        "Saskatchewan",
+        "Alberta",
+    ]

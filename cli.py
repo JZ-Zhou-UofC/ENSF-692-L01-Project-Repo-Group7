@@ -30,22 +30,21 @@ def run_cli(df):
         "Let's get started by proving wether people are moving away from province with high housing prices to province with low housing prices"
     )
     ## John: I'm using this as a pause to the program. This is for the user to read the content above
+
     input("Enter any key to continue > ")
 
-   
+
     proving_migration_trend(df)
     print("From the graph, it's evident that around 2022, there was a noticeable outflow of people from British Columbia and Ontario, while Alberta saw an increase in in-migration.")
     print("Migration trends in more affordable provinces like Saskatchewan appear relatively stable during this period.")
     print("\n\n")
+    
+
    
     input("Enter any key to continue > ")
     proving_housing_price_trend(df)
-   
-    # example on how to generate a graph
-    # these 2 things will be acquired from the user input. this gives the user option to show different graphs
-    input_province_array = ["Alberta", "British Columbia"]
-    covid_period = True
-    create_graph_to_compare_migration_trends_for_two_province(df, covid_period)
+    print("\n\n")
+    input("Enter any key to continue > ")
 
 
 if __name__ == "__main__":
