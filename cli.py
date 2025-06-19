@@ -93,6 +93,7 @@ def correlation_analysis(df):
     print(
         "From the comparison above, the article is supported by the data, especially in Alberta and Ontario.\n\n"
     )
+     #TODO John: I want to fluff this part up a bit. Can you help?
     input("Enter any key to continue > ")
 
 
