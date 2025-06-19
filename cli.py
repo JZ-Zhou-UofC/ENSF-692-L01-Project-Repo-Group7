@@ -2,9 +2,9 @@ from data_processing import *
 from provinces import *
 
 def run_cli(df):
-    show_introduction()
-    prove_article_claim(df)
-    correlation_analysis(df)
+    # show_introduction()
+    # prove_article_claim(df)
+    # correlation_analysis(df)
     interactive_loop(df)
     show_conclusion()
 
