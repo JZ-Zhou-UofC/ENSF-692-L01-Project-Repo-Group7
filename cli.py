@@ -1,5 +1,7 @@
 from data_processing import *
 from provinces import *
+from datetime import datetime
+
 
 def run_cli(df):
     # show_introduction()
@@ -15,25 +17,41 @@ def show_introduction():
     print(
         "'Seeking affordability, young families flee Canada's big cities for cheaper options' written by John Macfarlane"
     )
-    print("https://ca.finance.yahoo.com/news/seeking-affordability-young-families-flee-canadas-big-cities-for-cheaper-options-192548346.html\n\n")
+    print(
+        "https://ca.finance.yahoo.com/news/seeking-affordability-young-families-flee-canadas-big-cities-for-cheaper-options-192548346.html\n\n"
+    )
 
-    print("In this project, we will use data to prove to you if the article was telling the truth.")
-    print("Then we will explore/compare different data trends to find out what factors cause people to move")
-    print("Lastly, we will present some interesting conclusions we found along the way\n\n")
+    print(
+        "In this project, we will use data to prove to you if the article was telling the truth."
+    )
+    print(
+        "Then we will explore/compare different data trends to find out what factors cause people to move"
+    )
+    print(
+        "Lastly, we will present some interesting conclusions we found along the way\n\n"
+    )
     input("Enter any key to continue > ")
     print("\n\n")
 
 
 def prove_article_claim(df):
-    print("Let's get started by proving whether people are moving away from provinces with high housing prices.")
-    print("Specifically, demonstrate if people are leaving British Columbia and Ontario.\n\n")
+    print(
+        "Let's get started by proving whether people are moving away from provinces with high housing prices."
+    )
+    print(
+        "Specifically, demonstrate if people are leaving British Columbia and Ontario.\n\n"
+    )
     input("Enter any key to continue > ")
     print("\n\n")
 
     proving_migration_trend(df)
 
-    print("From the graph, it's evident that around 2022-06, there was a noticeable outflow of people from BC and ON, while Alberta saw a spike.")
-    print("Migration trends in affordable provinces like Saskatchewan appear relatively stable.\n\n")
+    print(
+        "From the graph, it's evident that around 2022-06, there was a noticeable outflow of people from BC and ON, while Alberta saw a spike."
+    )
+    print(
+        "Migration trends in affordable provinces like Saskatchewan appear relatively stable.\n\n"
+    )
     input("Enter any key to continue > ")
 
     net_migrants_aggregation(df)
@@ -42,50 +60,76 @@ def prove_article_claim(df):
     input("Enter any key to continue > ")
 
     proving_housing_price_trend(df)
-    print("The graph shows declining housing price indices in Alberta and Saskatchewan pre-COVID.")
-    print("However, housing prices spiked across all provinces once the pandemic began.\n\n")
+    print(
+        "The graph shows declining housing price indices in Alberta and Saskatchewan pre-COVID."
+    )
+    print(
+        "However, housing prices spiked across all provinces once the pandemic began.\n\n"
+    )
     input("Enter any key to continue > ")
 
 
 def correlation_analysis(df):
-    print("We’ll now calculate the correlation coefficient between migration and housing index for the last 10 years.")
+    print(
+        "We’ll now calculate the correlation coefficient between migration and housing index for the last 10 years."
+    )
     print("We'll compare affordable provinces (AB, SK) to expensive ones (ON, BC).\n\n")
     input("Enter any key to continue > ")
 
     housing_net_migration_correlation_coefficient_post_covid(df)
 
-    print("The correlation coefficient measures the linear relationship between two variables (range: -1 to 1).")
+    print(
+        "The correlation coefficient measures the linear relationship between two variables (range: -1 to 1)."
+    )
     print(" - 1: Perfect positive correlation")
     print(" - -1: Perfect negative correlation")
     print(" - 0: No correlation\n")
 
-    print("The correlation coefficient is 0.816 for Alberta → strong positive correlation.")
+    print(
+        "The correlation coefficient is 0.816 for Alberta → strong positive correlation."
+    )
     print("Ontario's coefficient is -0.749 → strong negative correlation.\n\n")
     input("Enter any key to continue > ")
 
-    print("From the comparison above, the article is supported by the data, especially in Alberta and Ontario.\n\n")
+    print(
+        "From the comparison above, the article is supported by the data, especially in Alberta and Ontario.\n\n"
+    )
     input("Enter any key to continue > ")
 
 
 def interactive_loop(df):
-    provinces_selected = False
-    province = []
-
+    user_wants_to_reselect = True
     while True:
         print("Let's explore other factors that may have caused these trends.")
-        print("You can compare up to 3 provinces.")
+        # We choose only 4 province between we do not want the graph to get too crowded
+        print("You can compare up to 4 provinces.")
+        print("You can compare the trends between two different time periods.")
         print('Type "exit" anytime to go to conclusion.\n')
 
-        if not provinces_selected:
+        if user_wants_to_reselect:
+            print("\n")
             number_of_provinces = get_number_of_provinces()
             if number_of_provinces == "exit":
                 break
 
+            print("\n")
             province = get_province_input(number_of_provinces)
             if province == "exit":
                 break
 
-            provinces_selected = True
+            print("\n")
+            print("Choose the first time range")
+            time_period_1 = get_time_period()
+            if time_period_1 == "exit":
+                break
+
+            print("\n")
+            print("Choose the second time range")
+            time_period_2 = get_time_period()
+            if time_period_2 == "exit":
+                break
+
+            user_wants_to_reselect = False
 
         main_column = get_main_column(df)
         if main_column == "exit":
@@ -95,14 +139,14 @@ def interactive_loop(df):
         if sub_column == "exit":
             break
 
-        create_graph_to_compare(df, province, main_column, sub_column)
+        create_graph_to_compare(
+            df, province, main_column, sub_column, time_period_1, time_period_2
+        )
 
         print("\n\nAnything else you want to see?")
-        user_wants_to_reselect = should_reselect_provinces()
+        user_wants_to_reselect = get_if_user_wants_to_reselect()
         if user_wants_to_reselect == "exit":
             break
-
-        provinces_selected = not user_wants_to_reselect
 
 
 def show_conclusion():
@@ -110,7 +154,6 @@ def show_conclusion():
     print("Here are some conclusions we found:\n")
     input("Enter any key to continue > ")
     print("\n\n")
-
 
 
 # ======================
@@ -121,7 +164,7 @@ def get_province_input(number_of_provinces):
 
     for i in range(number_of_provinces):
         while True:
-            user_input = input(f"Enter province {i+1} (e.g., AB, ON, QC): ").strip()
+            user_input = input(f"Enter province {i+1} (e.g., AB, ON, QC)> ").strip()
 
             if user_input == "exit":
                 return "exit"
@@ -147,7 +190,7 @@ def get_main_column(df):
         for i, col in enumerate(main_columns, 1):
             print(f"{i}. {col}")
 
-        user_input = input("Enter the number of your choice (or type 'exit' to quit): ")
+        user_input = input("Enter the number of your choice (or type 'exit' to quit)> ")
 
         if user_input.lower() == "exit":
             return "exit"
@@ -173,7 +216,7 @@ def get_sub_column(df, main_column):
     # Ask the user to select a sub-column
     while True:
         user_input = input(
-            f"Enter the number of the sub-category you want to choose (1-{len(sub_columns)}), or type 'exit' to quit: "
+            f"Enter the number of the sub-category you want to choose (1-{len(sub_columns)}), or type 'exit' to quit> "
         ).strip()
 
         # Check if the user wants to exit
@@ -200,7 +243,7 @@ def get_number_of_provinces():
     while True:
         # Prompt the user to enter the number of provinces
         user_input = input(
-            "Enter the number of provinces you want to compare. We can have up to 3 provinces. > "
+            "Enter the number of provinces you want to compare. We can have up to 4 provinces. > "
         ).strip()
 
         # Check if the user wants to exit
@@ -211,26 +254,88 @@ def get_number_of_provinces():
         if user_input.isdigit():
             number_of_provinces = int(user_input)
 
-            # Check if the input is within the allowed range (1 to 3)
-            if 1 <= number_of_provinces <= 3:
+            # Check if the input is within the allowed range (1 to 4)
+            if 1 <= number_of_provinces <= 4:
                 return number_of_provinces
             else:
-                print("Please enter a number between 1 and 3.")
+                print("Please enter a number between 1 and 4.")
         else:
             print("Invalid input. Please enter a valid number or type 'exit' to quit.")
-def should_reselect_provinces():
-    while True:
-        user_input = input("Would you like to re-select provinces? (y for yes, n for no, or type 'exit' to quit): ").strip().lower()
 
-        if user_input == 'y':
+
+def get_if_user_wants_to_reselect():
+    while True:
+        user_input = (
+            input(
+                "Would you like to reselect provinces and time period? (y for yes, n for no, or type 'exit' to quit)> "
+            )
+            .strip()
+            .lower()
+        )
+
+        if user_input == "y":
             return True
-        elif user_input == 'n':
+        elif user_input == "n":
             return False
-        elif user_input == 'exit':
+        elif user_input == "exit":
             return "exit"
         else:
             print("Invalid input. Please enter 'y', 'n', or 'exit'.")
 
+
+import pandas as pd
+
+import pandas as pd
+
+
+def get_time_period():
+    # Function to check if the input is valid
+    def is_valid_date(date_input):
+        try:
+
+            year, month = map(int, date_input.split("-"))
+            # Check if the month is between 1 and 12
+
+            if 1 <= month <= 12 and 2005 <= year <= 2025:
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
+
+    # Get start date from the user and ensure it's in the correct format
+    print("time range:2015-01 to 2025-01")
+    while True:
+        start_date_input = input("Enter the start date (YYYY-M, e.g., 2015-1) > ")
+        if start_date_input.lower() == "exit":
+            return "exit"
+        if is_valid_date(start_date_input):
+            break
+        else:
+            print(
+                "Invalid input. Please enter the date in the format YYYY-M (e.g., 2015-1)."
+            )
+            print("time range:2015-01 to 2025-01")
+
+    # Get end date from the user and ensure it's in the correct format
+    while True:
+        end_date_input = input("Enter the end date (YYYY-M, e.g., 2025-1) > ")
+        if end_date_input.lower() == "exit":
+            return "exit"
+        if is_valid_date(end_date_input):
+            if datetime.strptime(end_date_input, "%Y-%m") > datetime.strptime(
+                start_date_input, "%Y-%m"
+            ):
+                break
+            print("Please make sure the end date is later than the start date")
+        else:
+            print(
+                "Invalid input. Please enter the date in the format YYYY-M (e.g., 2025-1)."
+            )
+            print("time range:2015-01 to 2025-01")
+
+    # Return the array with the start and end date strings
+    return [start_date_input, end_date_input]
 
 
 if __name__ == "__main__":
