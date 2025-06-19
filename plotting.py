@@ -102,8 +102,8 @@ def plot_sum_of_net_migrants(df, provinces):
 def plot_provinces_comparison(
     df_period1,df_period2, main_column, sub_column,time_period_1, time_period_2
 ):
-    title1=f"{main_column} for {sub_column} between {time_period_1[0]} to {time_period_1[1]}"
-    title2=f"{main_column} for {sub_column} between {time_period_2[0]} to {time_period_2[1]}"
+    title1=f"{main_column} data for {sub_column} between {time_period_1[0]} to {time_period_1[1]}"
+    title2=f"{main_column} data for {sub_column} between {time_period_2[0]} to {time_period_2[1]}"
     # Reset index for pivoting
     df_period1 = df_period1.reset_index()
     crossref_data = (main_column, sub_column)
