@@ -39,19 +39,32 @@ def run_cli(df):
     print(
         "Specifically, demonstrate if people are leaving British Columbia and Ontario, the two provinces with the largest & most expensive metropolitan areas in the country"
     )
+    print("\n\n")
     input("Enter any key to continue > ")
+    print("\n\n")
 
     proving_migration_trend(df)
     # TODO We can probably do some aggregation here. Do aggregation of sum of people moved into places before covid after covid
     print(
-        "From the graph, it's evident that around 2022, there was a noticeable outflow of people from British Columbia and Ontario, while Alberta saw an increase in in-migration."
+        "From the graph, it's evident that around 2022-06, there was a noticeable outflow of people from British Columbia and Ontario, while Alberta saw an spike in the in-flow of pleople."
     )
     print(
         "Migration trends in more affordable provinces like Saskatchewan appear relatively stable during this period."
     )
+    print(
+        "To print a more clear picture, let's aggregate these data from 2015-2020 and 2015-2025"
+    )
     print("\n\n")
-
     input("Enter any key to continue > ")
+    print("\n\n")
+    net_migrants_aggregation(df)
+    print('Seems "Net Migrants by Province" bar chart supports the statement above')
+    print(
+        "Now let's see if the housing price also supports the statement in the article"
+    )
+    print("\n\n")
+    input("Enter any key to continue > ")
+    print("\n\n")
     proving_housing_price_trend(df)
     print(
         "The graph clearly shows that the housing price index for Alberta and Saskatchewan had been declining for several years before COVID."
@@ -61,25 +74,65 @@ def run_cli(df):
     )
     print("\n\n")
     input("Enter any key to continue > ")
+    print("\n\n")
 
     # TODO say something....
     print(
-        "To demonstrate this, the correlation coefficient between out-migration and housing index will be calculated for each relevant province post-covid."
+        "To demonstrate this, the correlation coefficient between migration and housing index will be calculated for each relevant province during the last 10 years."
     )
     print(
         "Alberta and Saskatchewan, with their more affordable housing, will be compared to Ontario and British Columbia."
     )
-    housing_outmigration_correlation_coefficient_post_covid(df)
+    print("\n\n")
+    input("Enter any key to continue > ")
+    print("\n\n")
+    housing_net_migration_correlation_coefficient_post_covid(df)
+    print(
+        "The correlation coefficient measures the strength and direction of a linear relationship between two variables."
+    )
+    print("It ranges from -1 to 1:")
+    print(
+        " - A value of 1 means a perfect positive correlation: as one variable increases, the other increases proportionally."
+    )
+    print(
+        " - A value of -1 means a perfect negative correlation: as one variable increases, the other decreases proportionally."
+    )
+    print(
+        " - A value of 0 means no linear correlation: the variables do not have a predictable linear relationship."
+    )
+    print("\n\n")
+    print(
+        "The correlation coefficient is 0.819 for Alberta, which indicates a strong positive linear relationship"
+    )
+    print(
+        "For Ontario, the correlation coefficient is -0.744, indicating a strong negative linear relationship"
+    )
 
     print("\n\n")
     input("Enter any key to continue > ")
+    print("\n\n")
+
+    print("From the comparison above, it is evident that the article")
+    print(
+        "'Seeking affordability, young families flee Canada's big cities for cheaper options'"
+    )
+    print(
+        "is supported by the data, particularly in provinces like Alberta and Ontario,"
+    )
+    print(
+        "where significant migration trends reflect the search for more affordable living."
+    )
+
+    print("\n\n")
+    input("Enter any key to continue > ")
+    print("\n\n")
 
     # ======================
     # Main Interaction Loop
     # ======================
     while True:
-        print("Let's explore some interesting comparisons based on other criteria.")
-        print("You can select up to three provinces to compare a specific criterion.")
+        print("Let's see what are the other factors that may caused this trend.")
+        print("You can select up to three provinces to compare a specific categories.")
         print(
             'You can jump to see conclusion at any time by entering "exit" in the cmd.'
         )
@@ -111,6 +164,7 @@ def run_cli(df):
     # ======================
     print("Here are something we found")
     input("Enter any key to continue > ")
+    print("\n\n")
 
 
 # ======================
