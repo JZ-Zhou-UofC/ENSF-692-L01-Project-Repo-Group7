@@ -100,7 +100,7 @@ def plot_sum_of_net_migrants(df, provinces):
 
 
 def plot_provinces_comparison(
-    filtered_df, main_column, sub_column, title="plot_provinces_comparison"
+    filtered_df, main_column, sub_column, 
 ):
 
     # TODO we will need to figure out how to get the correct unit for each graph
@@ -140,7 +140,7 @@ def plot_provinces_comparison(
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 10), sharex=True)
 
     migration_pivot.plot(ax=axes[0])
-    axes[0].set_title(title)
+    axes[0].set_title("aaaa")
     axes[0].set_ylabel(sub_column)
     axes[0].legend(title="Province")
     axes[0].grid(True)

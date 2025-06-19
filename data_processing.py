@@ -84,7 +84,7 @@ def create_graph_to_compare(df, province,main_column,sub_column):
     filtered = filtered[[(main_column, sub_column)]]
  
     plot_provinces_comparison(
-        filtered, main_column, sub_column, title="Out-Migration Trends"
+        filtered, main_column, sub_column,
     )
 
 
