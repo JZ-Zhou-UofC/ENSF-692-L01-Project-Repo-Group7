@@ -130,29 +130,46 @@ def run_cli(df):
     # ======================
     # Main Interaction Loop
     # ======================
+
+    provinces_selected = False  # Flag to track if provinces have been selected
+
     while True:
-        print("Let's see what are the other factors that may caused this trend.")
-        print("You can select up to three provinces to compare a specific categories.")
-        print(
-            'You can jump to see conclusion at any time by entering "exit" in the cmd.'
-        )
-        print("\n\n")
-        number_of_prinvince = get_number_of_provinces()
-        if number_of_prinvince == "exit":
-            break
-        province = get_province_input(number_of_prinvince)
-        if province == "exit":
-            break
+        print("Let's see what are the other factors that may have caused this trend.")
+        print("You can select up to three provinces to compare a specific category.")
+        print('You can jump to see the conclusion at any time by entering "exit" in the cmd.\n\n')
+
+        if not provinces_selected:
+            # Prompt for number of provinces only on first run
+            number_of_provinces = get_number_of_provinces()
+            if number_of_provinces == "exit":
+                break
+            province = get_province_input(number_of_provinces)
+            if province == "exit":
+                break
+            provinces_selected = True  # Set the flag to indicate provinces were selected
+        else:
+            # If provinces were already selected, skip the province input
+            print("You have already selected provinces.")
+            province = "Your Selected Provinces"  # Or use previously selected provinces if needed
+
+        # Proceed with the rest of the process
         main_column = get_main_column(df)
         if main_column == "exit":
             break
         sub_column = get_sub_column(df, main_column)
         if sub_column == "exit":
             break
-        # TODO give the ability to select time range
+        
+        # TODO: Add functionality for selecting time range
         create_graph_to_compare(df, province, main_column, sub_column)
         print("\n\n")
         print("Anything else you want to see?")
+        print("Anything else you want to see?")
+        should_reselect_provinces = should_reselect_provinces()
+
+        if should_reselect_provinces == "exit":
+            break
+        provinces_selected=not should_reselect_provinces   
         # TODO We can probably do some aggregation here
 
     print(
@@ -194,18 +211,25 @@ def get_province_input(number_of_provinces):
 
 
 def get_main_column(df):
-    while True:
-        user_input = input(
-            "Enter a main category name (e.g., 'Migration', 'Wage', 'Employment', 'CPI', 'Housing'): "
-        )
+    main_columns = df.columns.get_level_values(0).unique().tolist()
 
-        # Check if the input matches the outer level of the MultiIndex
-        if user_input in df.columns.get_level_values(0):
-            return user_input
-        else:
-            if user_input == "exit":
-                return "exit"
-            print(f"'{user_input}' is not a valid top-level column. Please try again.")
+    while True:
+        print("\nSelect a main category from the following options:")
+        for i, col in enumerate(main_columns, 1):
+            print(f"{i}. {col}")
+
+        user_input = input("Enter the number of your choice (or type 'exit' to quit): ")
+
+        if user_input.lower() == "exit":
+            return "exit"
+
+        # Check if input is a valid number
+        if user_input.isdigit():
+            index = int(user_input) - 1
+            if 0 <= index < len(main_columns):
+                return main_columns[index]
+
+        print("Invalid input. Please enter a valid number or type 'exit'.")
 
 
 def get_sub_column(df, main_column):
@@ -213,25 +237,25 @@ def get_sub_column(df, main_column):
     sub_columns = df[main_column].columns.tolist()
 
     # Display sub-column options for the user
-    print(f"Sub-columns under '{main_column}':")
+    print(f"\nSub-columns under '{main_column}':")
     for idx, col in enumerate(sub_columns, 1):
         print(f"{idx}. {col}")
 
     # Ask the user to select a sub-column
     while True:
-        try:
-            user_input = input(
-                f"Enter the number of the sub-category you want to choose (1-{len(sub_columns)}): "
-            ).strip()
+        user_input = input(
+            f"Enter the number of the sub-category you want to choose (1-{len(sub_columns)}), or type 'exit' to quit: "
+        ).strip()
 
-            # Check if the user wants to exit
-            if user_input == "exit":
-                return "exit"
+        # Check if the user wants to exit
+        if user_input.lower() == "exit":
+            return "exit"
 
-            # Convert user input to integer. This may cause error
+        # Validate that the input is a valid number
+        if user_input.isdigit():
             user_input = int(user_input)
 
-            # Validate the choice
+            # Validate the choice within range
             if 1 <= user_input <= len(sub_columns):
                 sub_column = sub_columns[user_input - 1]
                 return sub_column
@@ -239,31 +263,45 @@ def get_sub_column(df, main_column):
                 print(
                     f"Invalid choice. Please enter a number between 1 and {len(sub_columns)}."
                 )
-
-        except ValueError:
-            print("Invalid input. Please enter a valid number.")
+        else:
+            print("Invalid input. Please enter a valid number or 'exit' to quit.")
 
 
 def get_number_of_provinces():
     while True:
-        try:
-            # Prompt the user to enter the number of provinces
-            user_input = input(
-                "Enter number of provinces you want to compare. We can have up to 3 provinces. > "
-            ).strip()
-            if user_input == "exit":
-                return "exit"
-            # Convert the user input to an integer
+        # Prompt the user to enter the number of provinces
+        user_input = input(
+            "Enter the number of provinces you want to compare. We can have up to 3 provinces. > "
+        ).strip()
+
+        # Check if the user wants to exit
+        if user_input.lower() == "exit":
+            return "exit"
+
+        # Validate if the input is a number
+        if user_input.isdigit():
             number_of_provinces = int(user_input)
 
-            # Check if the input is within the allowed range
+            # Check if the input is within the allowed range (1 to 3)
             if 1 <= number_of_provinces <= 3:
                 return number_of_provinces
             else:
                 print("Please enter a number between 1 and 3.")
+        else:
+            print("Invalid input. Please enter a valid number or type 'exit' to quit.")
+def should_reselect_provinces():
+    while True:
+        user_input = input("Would you like to re-select provinces? (y for yes, n for no, or type 'exit' to quit): ").strip().lower()
 
-        except ValueError:
-            print("Invalid input. Please enter a valid number.")
+        if user_input == 'y':
+            return True
+        elif user_input == 'n':
+            return False
+        elif user_input == 'exit':
+            return "exit"
+        else:
+            print("Invalid input. Please enter 'y', 'n', or 'exit'.")
+
 
 
 if __name__ == "__main__":
