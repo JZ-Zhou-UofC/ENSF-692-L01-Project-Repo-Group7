@@ -1,15 +1,23 @@
-# ENSF-692 Data Analysis Project 
-# Group7
+# ENSF-692 Data Analysis Project
+
+# We are Group7
+
+## Authors
+
+- John Zhou
+- Jack Shenfield
+
 ## Project Overview
 
 This project analyzes Canadian interprovincial migration, housing, employment, and economic trends, inspired by the article:
+
 > "Seeking affordability, young families flee Canada's big cities for cheaper options" by John Macfarlane ([Yahoo Finance](https://ca.finance.yahoo.com/news/seeking-affordability-young-families-flee-canadas-big-cities-for-cheaper-options-192548346.html))
 
 The codebase processes and analyzes multiple public datasets to:
+
 - Clean and prepare raw data from various sources
 - Perform data analysis and generate insights
 - Provide an interactive CLI for exploring trends
-
 
 ## Setup Instructions
 
@@ -25,7 +33,9 @@ The codebase processes and analyzes multiple public datasets to:
    ```bash
    pip install -r requirements.txt
    ```
+
 ## Run Cleaning Scripts
+
 The raw data is too big(GB size) and can not be uploaded to github. So we made scripts to clean each file and saved them in the data folder.
 Each script in the `scripts/` directory processes a specific raw data file and outputs a cleaned version.
 
@@ -48,7 +58,6 @@ python main.py
 
 - The CLI will guide you through data exploration, analysis, and visualizations.
 
-
 ## Requirements
 
 - Python 3.9+
@@ -56,8 +65,3 @@ python main.py
   - pandas
   - numpy
   - matplotlib
-
-## Authors
-- John Zhou
-- Jack Shenfield
-
