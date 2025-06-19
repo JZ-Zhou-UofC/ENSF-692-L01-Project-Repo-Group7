@@ -2,7 +2,6 @@ from data_processing import *
 from provinces import *
 from datetime import datetime
 
-
 def run_cli(df):
     # show_introduction()
     # prove_article_claim(df)
@@ -152,6 +151,7 @@ def interactive_loop(df):
 
 
 def show_conclusion():
+    #TODO We will need a bit more stuff to say in here
     print("Thank you for using this CLI. Hope you found something interesting.\n\n")
     print("Here are some conclusions we found:\n")
     input("Enter any key to continue > ")
@@ -283,12 +283,6 @@ def get_if_user_wants_to_reselect():
             return "exit"
         else:
             print("Invalid input. Please enter 'y', 'n', or 'exit'.")
-
-
-import pandas as pd
-
-import pandas as pd
-
 
 def get_time_period():
     # Function to check if the input is valid

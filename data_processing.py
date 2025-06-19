@@ -81,7 +81,6 @@ def adding_net_migration_column(df):
 def create_graph_to_compare(
     df, province, main_column, sub_column, time_period_1, time_period_2
 ):
-    # TODO figure out the graph name etc.
     filtered = df[df.index.get_level_values("GEO").isin(province)]
     filtered = filtered[[(main_column, sub_column)]]
     df_period1 = filtered[
