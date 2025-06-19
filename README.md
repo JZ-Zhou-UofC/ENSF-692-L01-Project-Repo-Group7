@@ -1,5 +1,5 @@
-# ENSF-692 Data Analysis Project
-
+# ENSF-692 Data Analysis Project 
+# Group7
 ## Project Overview
 
 This project analyzes Canadian interprovincial migration, housing, employment, and economic trends, inspired by the article:
@@ -16,7 +16,7 @@ The codebase processes and analyzes multiple public datasets to:
 1. **Clone the repository**
 
    ```bash
-   git clone <repo-url>
+   git clone git@github.com:JZ-Zhou-UofC/ENSF-692-L01-Project-Repo-Group7.git
    cd ENSF-692-L01-Project-Repo-Group7
    ```
 
