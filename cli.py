@@ -3,9 +3,9 @@ from provinces import *
 
 
 def run_cli(df):
-    """
-    Introduction
-    """
+    # ======================
+    # Introduction
+    # ======================
     print("Welcome to the Data Analysis Project")
     print("This topic is inspired by the following article:")
     print(
@@ -24,24 +24,25 @@ def run_cli(df):
     print(
         "Then we will explore/compare different data trends to find out what factors cause people to move"
     )
-    print("Lastly, we will present some interesting conclusions we found along the way ")
+    print(
+        "Lastly, we will present some interesting conclusions we found along the way "
+    )
 
     print("\n\n")
 
-    """
-    Proving
-    """
+    # ======================
+    # Proving
+    # ======================
     print(
         "Let's get started by proving whether people are moving away from provinces with high housing prices to province with low housing prices"
     )
     print(
         "Specifically, demonstrate if people are leaving British Columbia and Ontario, the two provinces with the largest & most expensive metropolitan areas in the country"
     )
-    ## John: I'm using this as a pause to the program. This is for the user to read the content above
     input("Enter any key to continue > ")
 
     proving_migration_trend(df)
-    ##TODO We can probably do some aggregation here. Do aggregation of sum of people moved into places before covid after covid
+    # TODO We can probably do some aggregation here. Do aggregation of sum of people moved into places before covid after covid
     print(
         "From the graph, it's evident that around 2022, there was a noticeable outflow of people from British Columbia and Ontario, while Alberta saw an increase in in-migration."
     )
@@ -60,7 +61,8 @@ def run_cli(df):
     )
     print("\n\n")
     input("Enter any key to continue > ")
-    ##TODO say something....
+
+    # TODO say something....
     print(
         "To demonstrate this, the correlation coefficient between out-migration and housing index will be calculated for each relevant province post-covid."
     )
@@ -68,17 +70,15 @@ def run_cli(df):
         "Alberta and Saskatchewan, with their more affordable housing, will be compared to Ontario and British Columbia."
     )
     housing_outmigration_correlation_coefficient_post_covid(df)
-    
+
     print("\n\n")
     input("Enter any key to continue > ")
-    """
-    Main interaction looping
-    """
 
+    # ======================
+    # Main Interaction Loop
+    # ======================
     while True:
-        print(
-            "let's explore some interesting comparisons based on other criteria."
-        )
+        print("Let's explore some interesting comparisons based on other criteria.")
         print("You can select up to three provinces to compare a specific criterion.")
         print(
             'You can jump to see conclusion at any time by entering "exit" in the cmd.'
@@ -96,21 +96,26 @@ def run_cli(df):
         sub_column = get_sub_column(df, main_column)
         if sub_column == "exit":
             break
-        #TODO give the ability to select time range
-        create_graph_to_compare(df, province,main_column,sub_column)
+        # TODO give the ability to select time range
+        create_graph_to_compare(df, province, main_column, sub_column)
         print("\n\n")
-        print(
-            'Anything else you want to see?'
-        )
-        ##TODO We can probably do some aggregation here
-    ##TODO Here is something interesting we found
+        print("Anything else you want to see?")
+        # TODO We can probably do some aggregation here
+
     print(
-        "Thank you for using this User interactive cli. Hope you found something interesting"
+        "Thank you for using this User interactive CLI. Hope you found something interesting"
     )
+
+    # ======================
+    # Conclusion
+    # ======================
     print("Here are something we found")
     input("Enter any key to continue > ")
 
 
+# ======================
+# User Input Helper Functions
+# ======================
 def get_province_input(number_of_provinces):
     province_array = []
 
