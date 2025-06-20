@@ -78,33 +78,82 @@ def adding_net_migration_column(df):
     return df
 
 
-def create_graph_to_compare(df, province,main_column,sub_column):
-    #TODO figure out the graph name etc.
+def create_graph_to_compare(
+    df, province, main_column, sub_column, time_period_1, time_period_2
+):
     filtered = df[df.index.get_level_values("GEO").isin(province)]
     filtered = filtered[[(main_column, sub_column)]]
- 
+    df_period1 = filtered[
+        (filtered.index.get_level_values("REF_DATE") > time_period_1[0])
+        & (filtered.index.get_level_values("REF_DATE") < time_period_1[1])
+    ]
+
+    df_period2 = filtered[
+        (filtered.index.get_level_values("REF_DATE") > time_period_2[0])
+        & (filtered.index.get_level_values("REF_DATE") < time_period_2[1])
+    ]
     plot_provinces_comparison(
-        filtered, main_column, sub_column, title="Out-Migration Trends"
+        df_period1, df_period2, main_column, sub_column, time_period_1, time_period_2
     )
 
 
-
 def proving_migration_trend(df):
-    title="Net-Migration Trends"
-    main_column="Migration"
-    sub_column="Net-migrants"
+    title = "Net-Migration Trends"
+    main_column = "Migration"
+    sub_column = "Net-migrants"
     filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
     filtered = filtered[[(main_column, sub_column)]]
 
-    plot_to_prove_trends_in_province_of_interest(filtered, PROVINCE_OF_INTEREST,title,main_column,sub_column)
+    plot_to_prove_trends_in_province_of_interest(
+        filtered, PROVINCE_OF_INTEREST, title, main_column, sub_column
+    )
+
+
+def net_migrants_aggregation(df):
+    title = "Net-Migration Trends"
+    main_column = "Migration"
+    sub_column = "Net-migrants"
+    filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
+    filtered = filtered[[(main_column, sub_column)]]
+
+    plot_sum_of_net_migrants(filtered, PROVINCE_OF_INTEREST)
+
 
 def proving_housing_price_trend(df):
-    title="Housing Index Trends (2005 national average index=100)"
-    main_column="Housing"
-    sub_column="Housing Index"
+    title = "Housing Index Trends (2005 national average index=100)"
+    main_column = "Housing"
+    sub_column = "Housing Index"
     filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
     filtered = filtered[[(main_column, sub_column)]]
-    plot_to_prove_trends_in_province_of_interest(filtered, PROVINCE_OF_INTEREST,title,main_column,sub_column)
+    plot_to_prove_trends_in_province_of_interest(
+        filtered, PROVINCE_OF_INTEREST, title, main_column, sub_column
+    )
+
+
+def housing_net_migration_correlation_coefficient_post_covid(df):
+
+    main_column = "Housing"
+    sub_column = "Housing Index"
+    filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
+    filtered = filtered[filtered.index.get_level_values("REF_DATE") >= "2015-01"]
+
+    filtered = filtered[[(main_column, sub_column), ("Migration", "Net-migrants")]]
+
+    correlation_results = {}
+    for province in PROVINCE_OF_INTEREST:
+
+        province_data = filtered[filtered.index.get_level_values("GEO") == province]
+        province_data = province_data.dropna()  # drop empty values
+
+        x = province_data[(main_column, sub_column)]
+        y = province_data[("Migration", "Net-migrants")]
+        corr = x.corr(y)
+
+        correlation_results[province] = corr
+    print(correlation_results)
+
+    plot_housing_correlation_coefficients(correlation_results, PROVINCE_OF_INTEREST)
+
 
 if __name__ == "__main__":
     pass
