@@ -3,14 +3,14 @@ from provinces import *
 from datetime import datetime
 
 def run_cli(df):
-    # show_introduction()
+    show_introduction(df)
     # prove_article_claim(df)
     # correlation_analysis(df)
     interactive_loop(df)
     show_conclusion()
 
 
-def show_introduction():
+def show_introduction(df):
     print("Welcome to the Data Analysis Project")
     print("This topic is inspired by the following article:")
     print(
@@ -27,8 +27,22 @@ def show_introduction():
         "Then we will explore/compare different data trends to find out what factors cause people to move"
     )
     print(
-        "Lastly, we will present some interesting conclusions we found along the way\n\n"
+        "Lastly, we will present some interesting conclusions we found along the way"
     )
+    print("\n\n")
+    print("Let's get started by showing you a snippet of the merged data frame and the describe() method")
+    input("Enter any key to continue > ")
+    print("\n\n")
+  
+
+    print("---------------------Print the data frame---------------------")
+    print(df)
+    print("\n\n")
+
+    print("---------------------Print the data_frame.describe()---------------------")
+    print(df.describe())
+
+    print("\n\n")
     input("Enter any key to continue > ")
     print("\n\n")
 
