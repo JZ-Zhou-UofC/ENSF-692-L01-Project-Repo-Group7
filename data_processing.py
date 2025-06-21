@@ -244,7 +244,7 @@ def housing_net_migration_correlation_coefficient_post_covid(df):
         correlation_results[province] = corr
  
     province_abreviation_array = find_keys_from_values(PROVINCE_MAP, PROVINCE)
-    plot_housing_correlation_coefficients(correlation_results, province_abreviation_array)
+    plot_housing_correlation_coefficients(correlation_results, PROVINCE,province_abreviation_array)
 
 
 def find_the_max_correlation(df):

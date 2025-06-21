@@ -247,7 +247,7 @@ def plot_migration_correlations_with_other_categories(correlation_dict, province
     plt.tight_layout(rect=[0, 0, 1, 0.97])
     plt.show()
 
-def plot_housing_correlation_coefficients(correlation_results, provinces):
+def plot_housing_correlation_coefficients(correlation_results, provinces,province_abreviation_array):
     """
     Plots the housing correlation coefficients as a bar graph.
 
@@ -263,7 +263,7 @@ def plot_housing_correlation_coefficients(correlation_results, provinces):
     plt.ion()  # Ensure plot is non-blocking for CLI
     plt.figure(figsize=(8, 5))
 
-    bars = plt.bar(provinces, values, color="skyblue")
+    bars = plt.bar(province_abreviation_array, values, color="skyblue")
 
     # Add text labels above each bar
     for bar, value in zip(bars, values):
