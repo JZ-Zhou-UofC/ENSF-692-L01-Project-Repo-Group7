@@ -14,9 +14,9 @@ def run_cli(df):
     Returns:
         None
     """
-    show_introduction()
-    prove_article_claim(df)
-    correlation_analysis(df)
+    # show_introduction(df)
+    # prove_article_claim(df)
+    # correlation_analysis(df)
     interactive_loop(df)
     show_conclusion()
 
@@ -194,8 +194,8 @@ def interactive_loop(df):
 
             user_wants_to_reselect = False
 
-        time_period_1 = ["2020-1", "2025-1"]
-        time_period_2 = ["2020-1", "2025-1"]
+        time_period_1 = ["2015-1", "2025-1"]
+        time_period_2 = ["2005-1", "2025-1"]
         main_column = get_main_column(df)
         if main_column == "exit":
             break

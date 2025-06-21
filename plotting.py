@@ -153,10 +153,11 @@ def plot_provinces_comparison(
 
     plt.ion()  # this is needed to make the plot not to block cli process
     # Create subplots
-    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 10), sharex=True)
+    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 10))
 
     df_period1.plot(ax=axes[0])
     axes[0].set_title(title1)
+    axes[0].set_xlabel("Date")
     axes[0].set_ylabel(sub_column)
     axes[0].legend(title="Province")
     axes[0].grid(True)
@@ -250,6 +251,42 @@ def plot_to_prove_trends_in_province_of_interest(
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.show()
 
+def plot_migration_correlations(correlation_dict, provinces):
+    """
+    Plots correlation coefficients of each indicator vs Net-migrants across provinces.
+
+    Args:
+        correlation_dict (dict): Correlation results from calculate_migration_correlations
+        provinces (list): List of provinces
+
+    Returns:
+        None
+    """
+    num_plots = len(correlation_dict)
+    cols = 2
+    rows = (num_plots + 1) // cols
+
+    plt.ion()
+    fig, axes = plt.subplots(rows, cols, figsize=(12, 4 * rows))
+    axes = axes.flatten()
+
+    for i, (col, values) in enumerate(correlation_dict.items()):
+        ax = axes[i]
+        bars = ax.bar(provinces, values, color='mediumseagreen')
+        ax.set_title(f"{col[0]} – {col[1]}")
+        ax.set_ylim(-1, 1)
+        ax.axhline(0, color="gray", linestyle="--", linewidth=0.7)
+        for bar, value in zip(bars, values):
+            if value is not None:
+                ax.text(bar.get_x() + bar.get_width() / 2, value + 0.02 if value >= 0 else value - 0.05,
+                        f"{value:.2f}", ha='center', va='bottom' if value >= 0 else 'top', fontsize=8)
+
+    for j in range(len(correlation_dict), len(axes)):
+        fig.delaxes(axes[j])
+
+    fig.suptitle("Correlation of Net-migrants vs Other Indicators (2015–2025)", fontsize=14)
+    plt.tight_layout(rect=[0, 0, 1, 0.97])
+    plt.show()
 
 if __name__ == "__main__":
     pass

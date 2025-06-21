@@ -14,7 +14,6 @@ excel_files = [
 
 
 def create_dataframe():
-
     """
     Creates Pandas Dataframe from chosen data source.
 
@@ -77,7 +76,6 @@ def create_multi_indexing(df):
         ("Wage", "Total Wage (thousands dollars)"),
     ]
     df.columns = pd.MultiIndex.from_tuples(column_tuples)
-    print("_____________________________Multindexing____________")
 
     # df.to_excel("./data/multindexing.xlsx")
     # generate the excel only once to check the data
@@ -85,7 +83,6 @@ def create_multi_indexing(df):
 
 
 def adding_average_monthly_wage_column(df):
-
     """
     Calculate & add average monthly wage column to multi-indexed dataframe.
 
@@ -104,7 +101,6 @@ def adding_average_monthly_wage_column(df):
 
 
 def adding_net_migration_column(df):
-
     """
     Calculate & add net migration column to multi-indexed dataframe.
 
@@ -124,8 +120,6 @@ def adding_net_migration_column(df):
 def create_graph_to_compare(
     df, province, main_column, sub_column, time_period_1, time_period_2
 ):
-    
-
     """
     Create the two separate dataframes for the two periods, column of interest, province, and plot them.
 
@@ -158,7 +152,6 @@ def create_graph_to_compare(
 
 
 def proving_migration_trend(df):
-
     """
     Plots migration trend.
 
@@ -181,7 +174,6 @@ def proving_migration_trend(df):
 
 
 def net_migrants_aggregation(df):
-
     """
     Plots migration trend for aggregated data.
 
@@ -202,7 +194,6 @@ def net_migrants_aggregation(df):
 
 
 def proving_housing_price_trend(df):
-
     """
     Plots housing price trend.
 
@@ -224,7 +215,6 @@ def proving_housing_price_trend(df):
 
 
 def housing_net_migration_correlation_coefficient_post_covid(df):
-
     """
     Plots correlation coefficients for chosen data.
 
@@ -235,13 +225,10 @@ def housing_net_migration_correlation_coefficient_post_covid(df):
         None
     """
 
-
-    main_column = "Housing"
-    sub_column = "Housing Index"
     filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
     filtered = filtered[filtered.index.get_level_values("REF_DATE") >= "2015-01"]
 
-    filtered = filtered[[(main_column, sub_column), ("Migration", "Net-migrants")]]
+    filtered = filtered[[("Housing", "Housing Index"), ("Migration", "Net-migrants")]]
 
     correlation_results = {}
     for province in PROVINCE_OF_INTEREST:
@@ -249,7 +236,7 @@ def housing_net_migration_correlation_coefficient_post_covid(df):
         province_data = filtered[filtered.index.get_level_values("GEO") == province]
         province_data = province_data.dropna()  # drop empty values
 
-        x = province_data[(main_column, sub_column)]
+        x = province_data[("Housing", "Housing Index")]
         y = province_data[("Migration", "Net-migrants")]
         corr = x.corr(y)
 
@@ -257,6 +244,46 @@ def housing_net_migration_correlation_coefficient_post_covid(df):
     print(correlation_results)
 
     plot_housing_correlation_coefficients(correlation_results, PROVINCE_OF_INTEREST)
+
+
+
+
+def find_the_max_correlation(df):
+    """
+    Calculates correlation between Net-migrants and all other indicators for each province,
+    then plots the results.
+
+    Args:
+        df (pd.DataFrame): MultiIndex DataFrame with ("REF_DATE", "GEO")
+        provinces (list): List of provinces
+
+    Returns:
+        dict: {(main_col, sub_col): [correlations per province]}
+    """
+    df_filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
+    df_filtered = df_filtered[
+        df_filtered.index.get_level_values("REF_DATE") >= "2015-01"
+    ]
+
+    all_columns = [col for col in df.columns if col != ("Migration", "Net-migrants")]
+    correlation_dict = {col: [] for col in all_columns}
+
+    for province in PROVINCE_OF_INTEREST:
+        province_data = df_filtered[
+            df_filtered.index.get_level_values("GEO") == province
+        ]
+        for col in all_columns:
+            subset = province_data[[col, ("Migration", "Net-migrants")]].dropna()
+            if not subset.empty:
+                corr = subset[col].corr(subset[("Migration", "Net-migrants")])
+                correlation_dict[col].append(corr)
+            else:
+                correlation_dict[col].append(None)
+
+    # Plot the results directly
+    plot_migration_correlations(correlation_dict, PROVINCE_OF_INTEREST)
+
+    return correlation_dict
 
 
 if __name__ == "__main__":
