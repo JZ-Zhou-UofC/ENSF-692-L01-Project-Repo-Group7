@@ -15,10 +15,10 @@ def run_cli(df):
     Returns:
         None
     """
-    # show_introduction(df)
-    # prove_article_claim(df)
+    show_introduction(df)
+    prove_article_claim(df)
     correlation_analysis(df)
-    # interactive_loop(df)
+    interactive_loop(df)
     show_conclusion(df)
 
 
@@ -179,22 +179,21 @@ def interactive_loop(df):
             if province == "exit":
                 break
 
-            # print("\n")
-            # print("Choose the first time range")
-            # time_period_1 = get_time_period()
-            # if time_period_1 == "exit":
-            #     break
+            print("\n")
+            print("Choose the first time range")
+            time_period_1 = get_time_period()
+            if time_period_1 == "exit":
+                break
 
-            # print("\n")
-            # print("Choose the second time range")
-            # time_period_2 = get_time_period()
-            # if time_period_2 == "exit":
-            #     break
+            print("\n")
+            print("Choose the second time range")
+            time_period_2 = get_time_period()
+            if time_period_2 == "exit":
+                break
 
             user_wants_to_reselect = False
 
-        time_period_1 = ["2015-1", "2025-1"]
-        time_period_2 = ["2005-1", "2025-1"]
+    
         main_column = get_main_column(df)
         if main_column == "exit":
             break
