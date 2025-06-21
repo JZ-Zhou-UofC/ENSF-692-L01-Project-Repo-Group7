@@ -4,6 +4,7 @@ from data_processing import *
 from provinces import *
 from datetime import datetime
 
+
 def run_cli(df):
     """
     Runs all the relevant functions created in cli.py
@@ -46,14 +47,13 @@ def show_introduction(df):
     print(
         "Then we will explore/compare different data trends to find out what factors cause people to move"
     )
-    print(
-        "Lastly, we will present some interesting conclusions we found along the way"
-    )
+    print("Lastly, we will present some interesting conclusions we found along the way")
     print("\n\n")
-    print("Let's get started by showing you a snippet of the merged data frame and the describe() method")
+    print(
+        "Let's get started by showing you a snippet of the merged data frame and the describe() method"
+    )
     input("Enter any key to continue > ")
     print("\n\n")
-
 
     print("---------------------Print the data frame---------------------")
     print(df)
@@ -140,7 +140,7 @@ def correlation_analysis(df):
     )
     print("Ontario's coefficient is -0.749 → strong negative correlation.\n\n")
     input("Enter any key to continue > ")
-   
+
     print(
         "From the comparison above, the article is supported by the data, especially in Alberta and Ontario.\n\n"
     )
@@ -149,10 +149,10 @@ def correlation_analysis(df):
 
 def interactive_loop(df):
     """
-    The interactive loop to fulfill project requirements. 
-    Takes inputs of 1-4 provinces and a dataset. 
-    Illustrates some plots to demonstrate the relation of the inputs. 
-    Calls functions from data_processing.py. 
+    The interactive loop to fulfill project requirements.
+    Takes inputs of 1-4 provinces and a dataset.
+    Illustrates some plots to demonstrate the relation of the inputs.
+    Calls functions from data_processing.py.
 
     Args:
         df (Pandas Dataframe): Cleaned dataframe for analysis
@@ -223,10 +223,35 @@ def show_conclusion(df):
     Returns:
         None
     """
-    find_the_max_correlation(df)
-    #TODO We will need a bit more stuff to say in here
+
     print("Thank you for using this CLI. Hope you found something interesting.\n\n")
-    print("Here are some conclusions we found:\n\n")
+    print("Here are something interesting we found:")
+    print("\n\n")
+    input("Enter any key to continue > ")
+    print("\n\n")
+
+    print(
+        "By computing the correlation coefficient through all the columns in the data frame against the net-migration trend"
+    )
+    print(
+        "We found that the average monthly wage has the highest correlation coefficient"
+    )
+    print(
+        "As a conclusion, through data, we found Alberta is the top growing province that attracts the most interprovincial migrants"
+    )
+    print("The biggest reason behind such trend is the wage growth and housing prices")
+    print(
+        "The following is a graph that shows the categories that has a |correlation coefficient| above 0.8 which means a fairly strong positive relationship."
+    )
+
+    print("\n\n")
+    input("Enter any key to continue > ")
+    print("\n\n")
+
+    find_the_max_correlation(df)
+
+    print("\n\n")
+    print("Here comes an end to our cli, press enter one last time to end")
     input("Enter any key to continue > ")
     print("\n\n")
 
@@ -235,7 +260,6 @@ def show_conclusion(df):
 # User Input Helper Functions
 # ======================
 def get_province_input(number_of_provinces):
-
     """
     Takes the number of provinces inputted by the user and promts them to specify which provinces, in short form.
 
@@ -269,18 +293,17 @@ def get_province_input(number_of_provinces):
 
 
 def get_main_column(df):
-
     """
-    
+
     Gets the index of the main column to be analyzed.
 
     Args:
         df (Pandas Dataframe): Cleaned dataframe for analysis
 
     Returns:
-        main_columns[index] (String): returns the name of the main column. 
+        main_columns[index] (String): returns the name of the main column.
     """
-        
+
     main_columns = df.columns.get_level_values(0).unique().tolist()
 
     while True:
@@ -303,18 +326,17 @@ def get_main_column(df):
 
 
 def get_sub_column(df, main_column):
-
     """
-    
+
     Gets the index of the sub-column to be analyzed.
 
     Args:
         df (Pandas Dataframe): Cleaned dataframe for analysis
 
     Returns:
-        sub_columns (String): returns the name of the sub-column. 
+        sub_columns (String): returns the name of the sub-column.
     """
-                
+
     # Get the sub-columns corresponding to the main column
     sub_columns = df[main_column].columns.tolist()
 
@@ -350,7 +372,6 @@ def get_sub_column(df, main_column):
 
 
 def get_number_of_provinces():
-
     """
     Gets the number of provinces inputted by the user and stores it.
 
@@ -415,6 +436,7 @@ def get_if_user_wants_to_reselect():
         else:
             print("Invalid input. Please enter 'y', 'n', or 'exit'.")
 
+
 def get_time_period():
     """
     Gets the start date & end date from user in YYYY-MM format, checks if they are valid, and returns them.
@@ -424,8 +446,9 @@ def get_time_period():
 
     Returns:
         [start_date_input, end_date_input] (list): The two dates in list format
-        
+
     """
+
     # Function to check if the input is valid
     def is_valid_date(date_input):
         """
