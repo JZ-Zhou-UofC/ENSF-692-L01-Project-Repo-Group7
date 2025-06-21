@@ -1,3 +1,5 @@
+# ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
+
 import pandas as pd
 from plotting import *
 from provinces import *
@@ -12,6 +14,16 @@ excel_files = [
 
 
 def create_dataframe():
+
+    """
+    Creates Pandas Dataframe from chosen data source.
+
+    Args:
+        None
+
+    Returns:
+        merged_df (Pandas Dataframe): The dataframe created from the excel file.
+    """
     merged_df = None
     for file in excel_files:
         df = pd.read_excel(file)
@@ -31,6 +43,15 @@ def create_dataframe():
 
 
 def create_multi_indexing(df):
+    """
+    Make the newly created dataframe multi-indexed, as per project requirements.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        df (Pandas Dataframe): The same dataframe, now multi-indexed by Date & Province.
+    """
     df = df.set_index(["REF_DATE", "GEO"])
     column_tuples = [
         ("CPI", "Alcoholic beverages, tobacco products and recreational cannabis"),
@@ -64,6 +85,17 @@ def create_multi_indexing(df):
 
 
 def adding_average_monthly_wage_column(df):
+
+    """
+    Calculate & add average monthly wage column to multi-indexed dataframe.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        df (Pandas Dataframe): The same dataframe, now with the new column.
+    """
+
     df[("Wage", "Average Monthly Wage")] = (
         df[("Wage", "Total Wage (thousands dollars)")]
         / df[("Employment", "Employment (thousands)")]
@@ -72,6 +104,17 @@ def adding_average_monthly_wage_column(df):
 
 
 def adding_net_migration_column(df):
+
+    """
+    Calculate & add net migration column to multi-indexed dataframe.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        df (Pandas Dataframe): The same dataframe, now with the new column.
+    """
+
     df["Migration", "Net-migrants"] = (
         df[("Migration", "In-migrants")] - df[("Migration", "Out-migrants")]
     )
@@ -81,6 +124,23 @@ def adding_net_migration_column(df):
 def create_graph_to_compare(
     df, province, main_column, sub_column, time_period_1, time_period_2
 ):
+    
+
+    """
+    Create the two separate dataframes for the two periods, column of interest, province, and plot them.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+        province (String): Input province
+        main_column (String): Name of the main column of interest.
+        sub_column (String): Name of the sub-column of interest.
+        time_period_1 (list): List of start and end time period for plot1.
+        time_period_2 (list): List of start and end time period for plot2.
+
+    Returns:
+        None
+    """
+
     filtered = df[df.index.get_level_values("GEO").isin(province)]
     filtered = filtered[[(main_column, sub_column)]]
     df_period1 = filtered[
@@ -98,6 +158,17 @@ def create_graph_to_compare(
 
 
 def proving_migration_trend(df):
+
+    """
+    Plots migration trend.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    Returns:
+        None
+    """
+
     title = "Net-Migration Trends"
     main_column = "Migration"
     sub_column = "Net-migrants"
@@ -110,6 +181,17 @@ def proving_migration_trend(df):
 
 
 def net_migrants_aggregation(df):
+
+    """
+    Plots migration trend for aggregated data.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    Returns:
+        None
+    """
+
     title = "Net-Migration Trends"
     main_column = "Migration"
     sub_column = "Net-migrants"
@@ -120,6 +202,17 @@ def net_migrants_aggregation(df):
 
 
 def proving_housing_price_trend(df):
+
+    """
+    Plots housing price trend.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    Returns:
+        None
+    """
+
     title = "Housing Index Trends (2005 national average index=100)"
     main_column = "Housing"
     sub_column = "Housing Index"
@@ -131,6 +224,17 @@ def proving_housing_price_trend(df):
 
 
 def housing_net_migration_correlation_coefficient_post_covid(df):
+
+    """
+    Plots correlation coefficients for chosen data.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    Returns:
+        None
+    """
+
 
     main_column = "Housing"
     sub_column = "Housing Index"

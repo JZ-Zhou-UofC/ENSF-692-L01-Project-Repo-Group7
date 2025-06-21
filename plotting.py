@@ -1,7 +1,20 @@
+# ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
+
 import matplotlib.pyplot as plt
 import pandas as pd
 
 def plot_housing_correlation_coefficients(correlation_results, provinces):
+
+    """
+    Plots the housing correlation coefficients as a bar graph.
+
+    Args:
+        correlation_results (tuple): correlation results to be plotted
+        provinces (list): provinces to be plotted
+
+    Returns:
+        None
+    """
     values = [correlation_results[prov] for prov in provinces]
 
     plt.ion()  # Ensure plot is non-blocking for CLI
@@ -36,9 +49,12 @@ def plot_sum_of_net_migrants(df, provinces):
     Bar plot of net migrants by province for two periods:
     2015-01 to 2020-01, and 2020-01 to 2025-01.
 
-    Parameters:
-    - df: MultiIndex DataFrame with REF_DATE and GEO levels.
-    - provinces: List of province names to include in the plot.
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels.
+        provinces (list): List of province names to include in the plot.
+
+    Returns:
+        None
     """
 
     # Filter and sum by period
@@ -97,8 +113,27 @@ def plot_sum_of_net_migrants(df, provinces):
 
 
 def plot_provinces_comparison(
+        
+
     df_period1, df_period2, main_column, sub_column, time_period_1, time_period_2
 ):
+    
+    """
+    Line graph of colummn of interest by province for two periods:
+    2015-01 to 2020-01, and 2020-01 to 2025-01.
+
+    Args:
+        df_period1 (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plot1.
+        df_period2 (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plot2.
+        main_column (String): Name of the main column of interest.
+        sub_column (String): Name of the sub-column of interest.
+        time_period_1 (list): List of start and end time period for plot1.
+        time_period_2 (list): List of start and end time period for plot2.
+
+    Returns:
+        None
+    """
+
     title1 = f"{main_column} data for {sub_column} between {time_period_1[0]} to {time_period_1[1]}"
     title2 = f"{main_column} data for {sub_column} between {time_period_2[0]} to {time_period_2[1]}"
     # Reset index for pivoting

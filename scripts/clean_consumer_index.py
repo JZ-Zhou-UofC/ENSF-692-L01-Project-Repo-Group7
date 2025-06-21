@@ -1,7 +1,6 @@
 # Data_Scripts
 
-# ENSF-692 Project
-# John Zhou & Jack Shenfield
+# ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
 
 # imported libraries
 import numpy as np
