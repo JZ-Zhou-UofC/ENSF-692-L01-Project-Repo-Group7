@@ -127,8 +127,7 @@ def create_graph_to_compare(
     
 
     """
-    Line graph of net migrants vs colummn of interest by province for two periods:
-    2015-01 to 2020-01, and 2020-01 to 2025-01.
+    Create the two separate dataframes for the two periods, column of interest, province, and plot them.
 
     Args:
         df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.

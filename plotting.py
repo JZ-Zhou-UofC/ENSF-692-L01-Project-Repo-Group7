@@ -119,7 +119,7 @@ def plot_provinces_comparison(
 ):
     
     """
-    Line graph of net migrants vs colummn of interest by province for two periods:
+    Line graph of colummn of interest by province for two periods:
     2015-01 to 2020-01, and 2020-01 to 2025-01.
 
     Args:

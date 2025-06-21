@@ -345,6 +345,7 @@ def get_number_of_provinces():
 
     Returns:
         number_of_provinces (int): Number of provinces
+        "exit" (String literal): return "exit" keyword if user asks for it
     """
     while True:
         # Prompt the user to enter the number of provinces

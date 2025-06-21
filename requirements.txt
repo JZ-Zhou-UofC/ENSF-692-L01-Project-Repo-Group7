@@ -1,5 +1,3 @@
-ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
-
 matplotlib==3.10.3
 numpy==1.25.2
 pandas==2.3.0
