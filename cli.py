@@ -1,8 +1,19 @@
+# ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
+
 from data_processing import *
 from provinces import *
 from datetime import datetime
 
 def run_cli(df):
+    """
+    Runs all the relevant functions created in cli.py
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        None
+    """
     # show_introduction()
     # prove_article_claim(df)
     # correlation_analysis(df)
@@ -11,6 +22,15 @@ def run_cli(df):
 
 
 def show_introduction():
+    """
+    Prints out a series of lines introducing our project.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     print("Welcome to the Data Analysis Project")
     print("This topic is inspired by the following article:")
     print(
@@ -34,6 +54,14 @@ def show_introduction():
 
 
 def prove_article_claim(df):
+    """
+    Prints lines discussing the given article. Uses functions created in data_processing.py to illustrate.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+    Returns:
+        None
+    """
     print(
         "Let's get started by proving whether people are moving away from provinces with high housing prices."
     )
@@ -69,6 +97,15 @@ def prove_article_claim(df):
 
 
 def correlation_analysis(df):
+    """
+    Demonstrates correlation analysis between net-migration and chosen datasets. Calls data_processing.py functions to illustrate.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        None
+    """
     print(
         "We’ll now calculate the correlation coefficient between migration and housing index for the last 10 years."
     )
@@ -98,6 +135,18 @@ def correlation_analysis(df):
 
 
 def interactive_loop(df):
+    """
+    The interactive loop to fulfill project requirements. 
+    Takes inputs of 1-4 provinces and a dataset. 
+    Illustrates some plots to demonstrate the relation of the inputs. 
+    Calls functions from data_processing.py. 
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        None
+    """
     user_wants_to_reselect = True
     while True:
         print("Let's explore other factors that may have caused these trends.")
@@ -152,6 +201,15 @@ def interactive_loop(df):
 
 
 def show_conclusion():
+    """
+    Prints conclusion statements.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     #TODO We will need a bit more stuff to say in here
     print("Thank you for using this CLI. Hope you found something interesting.\n\n")
     print("Here are some conclusions we found:\n")
@@ -163,6 +221,17 @@ def show_conclusion():
 # User Input Helper Functions
 # ======================
 def get_province_input(number_of_provinces):
+
+    """
+    Takes the number of provinces inputted by the user and promts them to specify which provinces, in short form.
+
+    Args:
+        number_of_provinces (integer): Number of provinces selected by the user.
+
+    Returns:
+        province_array (list): List of provinces that have been selected, in their full name.
+    """
+
     province_array = []
 
     for i in range(number_of_provinces):
@@ -186,6 +255,18 @@ def get_province_input(number_of_provinces):
 
 
 def get_main_column(df):
+
+    """
+    
+    Gets the index of the main column to be analyzed.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        main_columns[index] (String): returns the name of the main column. 
+    """
+        
     main_columns = df.columns.get_level_values(0).unique().tolist()
 
     while True:
@@ -208,6 +289,18 @@ def get_main_column(df):
 
 
 def get_sub_column(df, main_column):
+
+    """
+    
+    Gets the index of the sub-column to be analyzed.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        sub_columns (String): returns the name of the sub-column. 
+    """
+                
     # Get the sub-columns corresponding to the main column
     sub_columns = df[main_column].columns.tolist()
 
@@ -243,6 +336,16 @@ def get_sub_column(df, main_column):
 
 
 def get_number_of_provinces():
+
+    """
+    Gets the number of provinces inputted by the user and stores it.
+
+    Args:
+        None
+
+    Returns:
+        number_of_provinces (int): Number of provinces
+    """
     while True:
         # Prompt the user to enter the number of provinces
         user_input = input(
@@ -267,6 +370,18 @@ def get_number_of_provinces():
 
 
 def get_if_user_wants_to_reselect():
+    """
+    Modify the flag depending on user input
+
+    Args:
+        None
+
+    Returns:
+        True (boolean): change flag to True if user says yes
+        False (boolean): change flag to False if user says no
+        "exit" (String literal): return "exit" keyword if user asks for it
+    """
+
     while True:
         user_input = (
             input(
@@ -286,8 +401,27 @@ def get_if_user_wants_to_reselect():
             print("Invalid input. Please enter 'y', 'n', or 'exit'.")
 
 def get_time_period():
+    """
+    Gets the start date & end date from user in YYYY-MM format, checks if they are valid, and returns them.
+
+    Args:
+        None
+
+    Returns:
+        [start_date_input, end_date_input] (list): The two dates in list format
+        
+    """
     # Function to check if the input is valid
     def is_valid_date(date_input):
+        """
+        Determines if inputted date is valid.
+
+        Args:
+            date_input (String): Date in YYYY-MM format
+
+        Returns:
+            True/False (boolean): Depending on if the date is valid or not
+        """
         try:
 
             year, month = map(int, date_input.split("-"))

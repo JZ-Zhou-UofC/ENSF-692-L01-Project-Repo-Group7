@@ -1,3 +1,5 @@
+# ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
+
 PROVINCE = [
     "British Columbia",
     "Ontario",
