@@ -3,6 +3,7 @@
 import pandas as pd
 from plotting import *
 from provinces import *
+from utils import find_keys_from_values
 
 excel_files = [
     "./data/cleaned_consumer_price_index_data.xlsx",
@@ -225,13 +226,13 @@ def housing_net_migration_correlation_coefficient_post_covid(df):
         None
     """
 
-    filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
+    filtered = df[df.index.get_level_values("GEO").isin(PROVINCE)]
     filtered = filtered[filtered.index.get_level_values("REF_DATE") >= "2015-01"]
 
     filtered = filtered[[("Housing", "Housing Index"), ("Migration", "Net-migrants")]]
 
     correlation_results = {}
-    for province in PROVINCE_OF_INTEREST:
+    for province in PROVINCE:
 
         province_data = filtered[filtered.index.get_level_values("GEO") == province]
         province_data = province_data.dropna()  # drop empty values
@@ -241,49 +242,54 @@ def housing_net_migration_correlation_coefficient_post_covid(df):
         corr = x.corr(y)
 
         correlation_results[province] = corr
-    print(correlation_results)
-
-    plot_housing_correlation_coefficients(correlation_results, PROVINCE_OF_INTEREST)
-
-
+ 
+    province_abreviation_array = find_keys_from_values(PROVINCE_MAP, PROVINCE)
+    plot_housing_correlation_coefficients(correlation_results, province_abreviation_array)
 
 
 def find_the_max_correlation(df):
     """
     Calculates correlation between Net-migrants and all other indicators for each province,
-    then plots the results.
+    then plots only those with strong correlation (>0.8 or <-0.8).
+
 
     Args:
-        df (pd.DataFrame): MultiIndex DataFrame with ("REF_DATE", "GEO")
-        provinces (list): List of provinces
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
 
-    Returns:
-        dict: {(main_col, sub_col): [correlations per province]}
     """
-    df_filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
+    # filter data by province and date
+    df_filtered = df[df.index.get_level_values("GEO").isin(PROVINCE)]
     df_filtered = df_filtered[
         df_filtered.index.get_level_values("REF_DATE") >= "2015-01"
     ]
 
+    # get all columns except the target
     all_columns = [col for col in df.columns if col != ("Migration", "Net-migrants")]
-    correlation_dict = {col: [] for col in all_columns}
 
-    for province in PROVINCE_OF_INTEREST:
-        province_data = df_filtered[
-            df_filtered.index.get_level_values("GEO") == province
-        ]
-        for col in all_columns:
+    # loop through each column and calculate correlations across provinces
+    correlation_dict = {}
+
+    for col in all_columns:
+        correlations = []
+        for province in PROVINCE:
+            province_data = df_filtered[
+                df_filtered.index.get_level_values("GEO") == province
+            ]
             subset = province_data[[col, ("Migration", "Net-migrants")]].dropna()
-            if not subset.empty:
-                corr = subset[col].corr(subset[("Migration", "Net-migrants")])
-                correlation_dict[col].append(corr)
-            else:
-                correlation_dict[col].append(None)
 
-    # Plot the results directly
-    plot_migration_correlations(correlation_dict, PROVINCE_OF_INTEREST)
+            corr = subset[col].corr(subset[("Migration", "Net-migrants")])
+            correlations.append(corr)
 
-    return correlation_dict
+        # keep only columns with strong correlation in at least one province
+        if any(abs(c) > 0.8 for c in correlations):
+            correlation_dict[col] = correlations
+ 
+
+    province_abreviation_array = find_keys_from_values(PROVINCE_MAP, PROVINCE)
+    #  plot
+    plot_migration_correlations_with_other_categories(
+        correlation_dict, province_abreviation_array
+    )
 
 
 if __name__ == "__main__":

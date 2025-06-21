@@ -16,9 +16,9 @@ def run_cli(df):
     """
     # show_introduction(df)
     # prove_article_claim(df)
-    # correlation_analysis(df)
-    interactive_loop(df)
-    show_conclusion()
+    correlation_analysis(df)
+    # interactive_loop(df)
+    show_conclusion(df)
 
 
 def show_introduction(df):
@@ -53,7 +53,7 @@ def show_introduction(df):
     print("Let's get started by showing you a snippet of the merged data frame and the describe() method")
     input("Enter any key to continue > ")
     print("\n\n")
-  
+
 
     print("---------------------Print the data frame---------------------")
     print(df)
@@ -140,11 +140,10 @@ def correlation_analysis(df):
     )
     print("Ontario's coefficient is -0.749 → strong negative correlation.\n\n")
     input("Enter any key to continue > ")
-
+   
     print(
         "From the comparison above, the article is supported by the data, especially in Alberta and Ontario.\n\n"
     )
-     #TODO John: I want to fluff this part up a bit. Can you help?
     input("Enter any key to continue > ")
 
 
@@ -214,7 +213,7 @@ def interactive_loop(df):
             break
 
 
-def show_conclusion():
+def show_conclusion(df):
     """
     Prints conclusion statements.
 
@@ -224,9 +223,10 @@ def show_conclusion():
     Returns:
         None
     """
+    find_the_max_correlation(df)
     #TODO We will need a bit more stuff to say in here
     print("Thank you for using this CLI. Hope you found something interesting.\n\n")
-    print("Here are some conclusions we found:\n")
+    print("Here are some conclusions we found:\n\n")
     input("Enter any key to continue > ")
     print("\n\n")
 

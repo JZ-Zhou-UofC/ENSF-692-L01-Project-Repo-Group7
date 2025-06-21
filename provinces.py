@@ -23,11 +23,14 @@ PROVINCE_MAP = {
     "ON": "Ontario",
     "PE": "Prince Edward Island",
     "QC": "Quebec",
-    "SK": "Saskatchewan"
+    "SK": "Saskatchewan",
 }
 PROVINCE_OF_INTEREST = [
-        "British Columbia",
-        "Ontario",
-        "Saskatchewan",
-        "Alberta",
-    ]
+    "British Columbia",
+    "Ontario",
+    "Saskatchewan",
+    "Alberta",
+]
+
+if __name__ == "__main__":
+    pass
