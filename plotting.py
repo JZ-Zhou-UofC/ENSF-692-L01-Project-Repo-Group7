@@ -1,34 +1,9 @@
+# ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
+
 import matplotlib.pyplot as plt
 import pandas as pd
+import math
 
-def plot_housing_correlation_coefficients(correlation_results, provinces):
-    values = [correlation_results[prov] for prov in provinces]
-
-    plt.ion()  # Ensure plot is non-blocking for CLI
-    plt.figure(figsize=(8, 5))
-
-    bars = plt.bar(provinces, values, color="skyblue")
-
-    # Add text labels above each bar
-    for bar, value in zip(bars, values):
-        plt.text(
-            bar.get_x() + bar.get_width() / 2,  # x-position (center of bar)
-            (
-                value + 0.02 if value >= 0 else value - 0.05
-            ),  # y-position slightly above (or below for negative)
-            f"{value:.3f}",  # formatted value
-            ha="center",
-            va="bottom" if value >= 0 else "top",
-            fontsize=9,
-        )
-
-    plt.title("Correlation Coefficients: Housing vs Net-migration (2015–2025)")
-    plt.ylabel("Correlation Coefficient")
-    plt.xlabel("Province")
-    plt.ylim(-1, 1)
-    plt.axhline(0, color="gray", linewidth=0.8)
-    plt.tight_layout()
-    plt.show()
 
 
 def plot_sum_of_net_migrants(df, provinces):
@@ -36,9 +11,12 @@ def plot_sum_of_net_migrants(df, provinces):
     Bar plot of net migrants by province for two periods:
     2015-01 to 2020-01, and 2020-01 to 2025-01.
 
-    Parameters:
-    - df: MultiIndex DataFrame with REF_DATE and GEO levels.
-    - provinces: List of province names to include in the plot.
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels.
+        provinces (list): List of province names to include in the plot.
+
+    Returns:
+        None
     """
 
     # Filter and sum by period
@@ -99,6 +77,22 @@ def plot_sum_of_net_migrants(df, provinces):
 def plot_provinces_comparison(
     df_period1, df_period2, main_column, sub_column, time_period_1, time_period_2
 ):
+    """
+    Line graph of colummn of interest by province for two periods:
+    2015-01 to 2020-01, and 2020-01 to 2025-01.
+
+    Args:
+        df_period1 (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plot1.
+        df_period2 (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plot2.
+        main_column (String): Name of the main column of interest.
+        sub_column (String): Name of the sub-column of interest.
+        time_period_1 (list): List of start and end time period for plot1.
+        time_period_2 (list): List of start and end time period for plot2.
+
+    Returns:
+        None
+    """
+
     title1 = f"{main_column} data for {sub_column} between {time_period_1[0]} to {time_period_1[1]}"
     title2 = f"{main_column} data for {sub_column} between {time_period_2[0]} to {time_period_2[1]}"
     # Reset index for pivoting
@@ -118,10 +112,11 @@ def plot_provinces_comparison(
 
     plt.ion()  # this is needed to make the plot not to block cli process
     # Create subplots
-    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 10), sharex=True)
+    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(12, 10))
 
     df_period1.plot(ax=axes[0])
     axes[0].set_title(title1)
+    axes[0].set_xlabel("Date")
     axes[0].set_ylabel(sub_column)
     axes[0].legend(title="Province")
     axes[0].grid(True)
@@ -213,6 +208,82 @@ def plot_to_prove_trends_in_province_of_interest(
 
     # Layout adjustment
     plt.tight_layout(rect=[0, 0, 1, 0.96])
+    plt.show()
+
+
+def plot_migration_correlations_with_other_categories(correlation_dict, provinces):
+
+    num_plots = len(correlation_dict)
+    cols = 2
+    rows = math.ceil(num_plots / cols)
+
+    plt.ion()
+    fig, axes = plt.subplots(rows, cols, figsize=(12, 4 * rows))
+    axes = axes.flatten()
+
+    for i, (col, values) in enumerate(correlation_dict.items()):
+        ax = axes[i]
+        bars = ax.bar(provinces, values, color="mediumseagreen")
+        ax.set_title(f"{col[0]} – {col[1]}")
+        ax.set_ylim(-1, 1)
+        ax.axhline(0, color="gray", linestyle="--", linewidth=0.7)
+        for bar, value in zip(bars, values):
+            if value is not None:
+                ax.text(
+                    bar.get_x() + bar.get_width() / 2,
+                    value + 0.02 if value >= 0 else value - 0.05,
+                    f"{value:.2f}",
+                    ha="center",
+                    va="bottom" if value >= 0 else "top",
+                    fontsize=8,
+                )
+
+    for j in range(len(correlation_dict), len(axes)):
+        fig.delaxes(axes[j])
+
+    fig.suptitle(
+        "Correlation of Net-migrants vs Other Indicators (2015–2025)", fontsize=14
+    )
+    plt.tight_layout(rect=[0, 0, 1, 0.97])
+    plt.show()
+
+def plot_housing_correlation_coefficients(correlation_results, provinces,province_abreviation_array):
+    """
+    Plots the housing correlation coefficients as a bar graph.
+
+    Args:
+        correlation_results (tuple): correlation results to be plotted
+        provinces (list): provinces to be plotted
+
+    Returns:
+        None
+    """
+    values = [correlation_results[prov] for prov in provinces]
+
+    plt.ion()  # Ensure plot is non-blocking for CLI
+    plt.figure(figsize=(8, 5))
+
+    bars = plt.bar(province_abreviation_array, values, color="skyblue")
+
+    # Add text labels above each bar
+    for bar, value in zip(bars, values):
+        plt.text(
+            bar.get_x() + bar.get_width() / 2,  # x-position (center of bar)
+            (
+                value + 0.02 if value >= 0 else value - 0.05
+            ),  # y-position slightly above (or below for negative)
+            f"{value:.3f}",  # formatted value
+            ha="center",
+            va="bottom" if value >= 0 else "top",
+            fontsize=9,
+        )
+
+    plt.title("Correlation Coefficients: Housing vs Net-migration (2015–2025)")
+    plt.ylabel("Correlation Coefficient")
+    plt.xlabel("Province")
+    plt.ylim(-1, 1)
+    plt.axhline(0, color="gray", linewidth=0.8)
+    plt.tight_layout()
     plt.show()
 
 

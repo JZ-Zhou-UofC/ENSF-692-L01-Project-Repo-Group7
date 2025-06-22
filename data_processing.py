@@ -1,6 +1,9 @@
+# ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
+
 import pandas as pd
 from plotting import *
 from provinces import *
+from utils import find_keys_from_values
 
 excel_files = [
     "./data/cleaned_consumer_price_index_data.xlsx",
@@ -12,6 +15,15 @@ excel_files = [
 
 
 def create_dataframe():
+    """
+    Creates Pandas Dataframe from chosen data source.
+
+    Args:
+        None
+
+    Returns:
+        merged_df (Pandas Dataframe): The dataframe created from the excel file.
+    """
     merged_df = None
     for file in excel_files:
         df = pd.read_excel(file)
@@ -31,6 +43,15 @@ def create_dataframe():
 
 
 def create_multi_indexing(df):
+    """
+    Make the newly created dataframe multi-indexed, as per project requirements.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        df (Pandas Dataframe): The same dataframe, now multi-indexed by Date & Province.
+    """
     df = df.set_index(["REF_DATE", "GEO"])
     column_tuples = [
         ("CPI", "Alcoholic beverages, tobacco products and recreational cannabis"),
@@ -56,7 +77,6 @@ def create_multi_indexing(df):
         ("Wage", "Total Wage (thousands dollars)"),
     ]
     df.columns = pd.MultiIndex.from_tuples(column_tuples)
-    print("_____________________________Multindexing____________")
 
     # df.to_excel("./data/multindexing.xlsx")
     # generate the excel only once to check the data
@@ -64,6 +84,16 @@ def create_multi_indexing(df):
 
 
 def adding_average_monthly_wage_column(df):
+    """
+    Calculate & add average monthly wage column to multi-indexed dataframe.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        df (Pandas Dataframe): The same dataframe, now with the new column.
+    """
+
     df[("Wage", "Average Monthly Wage")] = (
         df[("Wage", "Total Wage (thousands dollars)")]
         / df[("Employment", "Employment (thousands)")]
@@ -72,6 +102,16 @@ def adding_average_monthly_wage_column(df):
 
 
 def adding_net_migration_column(df):
+    """
+    Calculate & add net migration column to multi-indexed dataframe.
+
+    Args:
+        df (Pandas Dataframe): Cleaned dataframe for analysis
+
+    Returns:
+        df (Pandas Dataframe): The same dataframe, now with the new column.
+    """
+
     df["Migration", "Net-migrants"] = (
         df[("Migration", "In-migrants")] - df[("Migration", "Out-migrants")]
     )
@@ -81,6 +121,21 @@ def adding_net_migration_column(df):
 def create_graph_to_compare(
     df, province, main_column, sub_column, time_period_1, time_period_2
 ):
+    """
+    Create the two separate dataframes for the two periods, column of interest, province, and plot them.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+        province (String): Input province
+        main_column (String): Name of the main column of interest.
+        sub_column (String): Name of the sub-column of interest.
+        time_period_1 (list): List of start and end time period for plot1.
+        time_period_2 (list): List of start and end time period for plot2.
+
+    Returns:
+        None
+    """
+
     filtered = df[df.index.get_level_values("GEO").isin(province)]
     filtered = filtered[[(main_column, sub_column)]]
     df_period1 = filtered[
@@ -98,6 +153,16 @@ def create_graph_to_compare(
 
 
 def proving_migration_trend(df):
+    """
+    Plots migration trend.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    Returns:
+        None
+    """
+
     title = "Net-Migration Trends"
     main_column = "Migration"
     sub_column = "Net-migrants"
@@ -110,6 +175,16 @@ def proving_migration_trend(df):
 
 
 def net_migrants_aggregation(df):
+    """
+    Plots migration trend for aggregated data.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    Returns:
+        None
+    """
+
     title = "Net-Migration Trends"
     main_column = "Migration"
     sub_column = "Net-migrants"
@@ -120,6 +195,16 @@ def net_migrants_aggregation(df):
 
 
 def proving_housing_price_trend(df):
+    """
+    Plots housing price trend.
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    Returns:
+        None
+    """
+
     title = "Housing Index Trends (2005 national average index=100)"
     main_column = "Housing"
     sub_column = "Housing Index"
@@ -131,28 +216,80 @@ def proving_housing_price_trend(df):
 
 
 def housing_net_migration_correlation_coefficient_post_covid(df):
+    """
+    Plots correlation coefficients for chosen data.
 
-    main_column = "Housing"
-    sub_column = "Housing Index"
-    filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    Returns:
+        None
+    """
+
+    filtered = df[df.index.get_level_values("GEO").isin(PROVINCE)]
     filtered = filtered[filtered.index.get_level_values("REF_DATE") >= "2015-01"]
 
-    filtered = filtered[[(main_column, sub_column), ("Migration", "Net-migrants")]]
+    filtered = filtered[[("Housing", "Housing Index"), ("Migration", "Net-migrants")]]
 
     correlation_results = {}
-    for province in PROVINCE_OF_INTEREST:
+    for province in PROVINCE:
 
         province_data = filtered[filtered.index.get_level_values("GEO") == province]
         province_data = province_data.dropna()  # drop empty values
 
-        x = province_data[(main_column, sub_column)]
+        x = province_data[("Housing", "Housing Index")]
         y = province_data[("Migration", "Net-migrants")]
         corr = x.corr(y)
 
         correlation_results[province] = corr
-    print(correlation_results)
+ 
+    province_abreviation_array = find_keys_from_values(PROVINCE_MAP, PROVINCE)
+    plot_housing_correlation_coefficients(correlation_results, PROVINCE,province_abreviation_array)
 
-    plot_housing_correlation_coefficients(correlation_results, PROVINCE_OF_INTEREST)
+
+def find_the_max_correlation(df):
+    """
+    Calculates correlation between Net-migrants and all other indicators for each province,
+    then plots only those with strong correlation (>0.8 or <-0.8).
+
+
+    Args:
+        df (Pandas Dataframe): MultiIndex DataFrame with REF_DATE and GEO levels for plotting.
+
+    """
+    # filter data by province and date
+    df_filtered = df[df.index.get_level_values("GEO").isin(PROVINCE)]
+    df_filtered = df_filtered[
+        df_filtered.index.get_level_values("REF_DATE") >= "2015-01"
+    ]
+
+    # get all columns except the target
+    all_columns = [col for col in df.columns if col != ("Migration", "Net-migrants")]
+
+    # loop through each column and calculate correlations across provinces
+    correlation_dict = {}
+
+    for col in all_columns:
+        correlations = []
+        for province in PROVINCE:
+            province_data = df_filtered[
+                df_filtered.index.get_level_values("GEO") == province
+            ]
+            subset = province_data[[col, ("Migration", "Net-migrants")]].dropna()
+
+            corr = subset[col].corr(subset[("Migration", "Net-migrants")])
+            correlations.append(corr)
+
+        # keep only columns with strong correlation in at least one province
+        if any(abs(c) > 0.8 for c in correlations):
+            correlation_dict[col] = correlations
+ 
+
+    province_abreviation_array = find_keys_from_values(PROVINCE_MAP, PROVINCE)
+    #  plot
+    plot_migration_correlations_with_other_categories(
+        correlation_dict, province_abreviation_array
+    )
 
 
 if __name__ == "__main__":

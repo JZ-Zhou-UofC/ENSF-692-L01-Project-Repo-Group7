@@ -1,3 +1,5 @@
+# ENSF 692 Project by Group 7: John Zhou & Jack Shenfield
+
 from cli import run_cli
 from data_processing import *
 
