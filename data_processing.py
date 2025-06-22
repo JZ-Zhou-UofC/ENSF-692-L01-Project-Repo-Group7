@@ -185,7 +185,6 @@ def net_migrants_aggregation(df):
         None
     """
 
-    title = "Net-Migration Trends"
     main_column = "Migration"
     sub_column = "Net-migrants"
     filtered = df[df.index.get_level_values("GEO").isin(PROVINCE_OF_INTEREST)]

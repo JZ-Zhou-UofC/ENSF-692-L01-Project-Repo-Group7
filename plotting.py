@@ -19,7 +19,7 @@ def plot_sum_of_net_migrants(df, provinces):
         None
     """
 
-    # Filter and sum by period
+    # groupby and aggreation function to find the sum of net-migrants in a specific time peroid
     period1 = (
         df[
             (df.index.get_level_values("REF_DATE") >= "2015-01")
