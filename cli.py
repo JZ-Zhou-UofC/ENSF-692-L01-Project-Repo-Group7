@@ -42,10 +42,10 @@ def show_introduction(df):
     )
 
     print(
-        "In this project, we will use data to prove to you if the article was telling the truth."
+        "In this project, we will use data to either prove or disprove the thesis of the article."
     )
     print(
-        "Then we will explore/compare different data trends to find out what factors cause people to move"
+        "Then we will explore/compare different socioeconomic data trends to find out what factors cause people to move"
     )
     print("Lastly, we will present some interesting conclusions we found along the way")
     print("\n\n")
