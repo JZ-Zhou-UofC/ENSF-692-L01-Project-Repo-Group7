@@ -1,6 +1,7 @@
 # ENSF-692 Data Analysis Project
 
 # We are Group7
+The report is in here. ENSF_692_Project_Report_Group7.pdf
 
 ## Authors
 
