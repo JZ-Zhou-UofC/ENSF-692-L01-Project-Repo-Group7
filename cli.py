@@ -102,11 +102,13 @@ def prove_article_claim(df):
 
     proving_housing_price_trend(df)
     print(
-        "The graph shows declining housing price indices in Alberta and Saskatchewan pre-COVID(2016-2020)."
+        "The graph shows declining housing price indices in AB and SK pre-COVID(2016-2020)."
     )
     print(
-        "However, housing prices spiked across all provinces once the pandemic began.\n\n"
+        "But for BC and ON the housing price indices spiked around 2016 and were increasing during pre-COVID(2016-2020)."
     )
+    print("Housing prices spiked across all provinces once the pandemic began.")
+    print("This supports the article claim.\n\n")
     input("Enter any key to continue > ")
 
 
@@ -121,7 +123,8 @@ def correlation_analysis(df):
         None
     """
     print(
-        "We’ll now calculate the correlation coefficient between migration and housing index for the last 10 years."
+        "We’ll now calculate the correlation coefficient between migration and the housing index "
+        "over the last 10 years to determine whether the correlation is strong."
     )
     print("We'll compare affordable provinces (AB, SK) to expensive ones (ON, BC).\n\n")
     input("Enter any key to continue > ")
@@ -160,7 +163,7 @@ def interactive_loop(df):
     Returns:
         None
     """
-    #Flag to check if the user wants to re-enter province and time period
+    # Flag to check if the user wants to re-enter province and time period
     user_wants_to_reselect = True
 
     while True:
@@ -173,7 +176,7 @@ def interactive_loop(df):
         if user_wants_to_reselect:
             print("\n")
             number_of_provinces = get_number_of_provinces()
-            #This is used to break out of the while loop
+            # This is used to break out of the while loop
             if number_of_provinces == "exit":
                 break
 
@@ -196,7 +199,6 @@ def interactive_loop(df):
 
             user_wants_to_reselect = False
 
-    
         main_column = get_main_column(df)
         if main_column == "exit":
             break
