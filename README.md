@@ -7,6 +7,9 @@
 - John Zhou
 - Jack Shenfield
 
+## Demo
+[Demo of the CLI flow](https://github.com/user-attachments/assets/e20ed2fa-b92c-4dff-a595-0cc721e2b508)
+
 ## Project Overview
 
 This project analyzes Canadian interprovincial migration, housing, employment, and economic trends, inspired by the article:
