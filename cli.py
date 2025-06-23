@@ -102,7 +102,7 @@ def prove_article_claim(df):
 
     proving_housing_price_trend(df)
     print(
-        "The graph shows declining housing price indices in Alberta and Saskatchewan pre-COVID."
+        "The graph shows declining housing price indices in Alberta and Saskatchewan pre-COVID(2016-2020)."
     )
     print(
         "However, housing prices spiked across all provinces once the pandemic began.\n\n"
