@@ -475,7 +475,7 @@ def get_time_period():
             return False
 
     # Get start date from the user and ensure it's in the correct format
-    print("time range:2015-01 to 2025-01")
+    print("time range:2005-01 to 2025-01")
     while True:
         start_date_input = input("Enter the start date (YYYY-M, e.g., 2015-1) > ")
         if start_date_input.lower() == "exit":
@@ -486,7 +486,7 @@ def get_time_period():
             print(
                 "Invalid input. Please enter the date in the format YYYY-M (e.g., 2015-1)."
             )
-            print("time range:2015-01 to 2025-01")
+            print("time range:2005-01 to 2025-01")
 
     # Get end date from the user and ensure it's in the correct format
     while True:
@@ -503,7 +503,7 @@ def get_time_period():
             print(
                 "Invalid input. Please enter the date in the format YYYY-M (e.g., 2025-1)."
             )
-            print("time range:2015-01 to 2025-01")
+            print("time range:2005-01 to 2025-01")
 
     # Return the array with the start and end date strings
     return [start_date_input, end_date_input]
