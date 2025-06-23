@@ -160,7 +160,9 @@ def interactive_loop(df):
     Returns:
         None
     """
+    #Flag to check if the user wants to re-enter province and time period
     user_wants_to_reselect = True
+
     while True:
         print("Let's explore other factors that may have caused these trends.")
         # We choose only 4 province between we do not want the graph to get too crowded
@@ -171,6 +173,7 @@ def interactive_loop(df):
         if user_wants_to_reselect:
             print("\n")
             number_of_provinces = get_number_of_provinces()
+            #This is used to break out of the while loop
             if number_of_provinces == "exit":
                 break
 
@@ -275,7 +278,7 @@ def get_province_input(number_of_provinces):
         while True:
             user_input = input(f"Enter province {i+1} (e.g., AB, ON, QC)> ").strip()
 
-            if user_input == "exit":
+            if user_input.lower() == "exit":
                 return "exit"
 
             province_name = PROVINCE_MAP.get(user_input)
